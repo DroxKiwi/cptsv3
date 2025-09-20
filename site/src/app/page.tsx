@@ -467,16 +467,6 @@ export default function Home() {
                                 )}
                               </CardHeader>
                               <CardContent className="flex-1 flex flex-col">
-                                <CardDescription className={`${themeClasses.corps} flex-1 line-clamp-5`}>
-                                  {article.excerpt || (article.contenu ? 
-                                    (() => {
-                                      const cleanContent = article.contenu.replace(/<[^>]*>/g, '')
-                                      return cleanContent.length > 150 
-                                        ? cleanContent.substring(0, 150) + '...'
-                                        : cleanContent
-                                    })()
-                                    : 'Contenu non disponible')}
-                                </CardDescription>
                                 
                                 {article.etiquettes && article.etiquettes.length > 1 && (
                                   <div className="flex flex-wrap gap-1 mt-2 flex-shrink-0">
