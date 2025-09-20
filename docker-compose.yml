@@ -1,0 +1,106 @@
+version: '3.8'
+
+services:
+  # Base de données PostgreSQL pour Directus
+  postgres_directus:
+    image: postgres:15-alpine
+    container_name: cpts_postgres_directus
+    environment:
+      POSTGRES_DB: directus
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      POSTGRES_INITDB_ARGS: "--encoding=UTF-8 --lc-collate=C --lc-ctype=C"
+    volumes:
+      - postgres_directus_data:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U admin -d directus"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    networks:
+      - cpts_network
+
+  # Application Next.js (Site public) - Développement local uniquement
+  # nextjs:
+  #   build: 
+  #     context: ./site
+  #     dockerfile: Dockerfile
+  #   container_name: cpts_nextjs
+  #   ports:
+  #     - "3000:3000"
+  #   environment:
+  #     - NODE_ENV=development
+  #     - DIRECTUS_URL=http://directus:8055
+  #     - NEXTAUTH_SECRET=${NEXTAUTH_SECRET:-cpts_dev_secret_key}
+  #     - NEXTAUTH_URL=http://localhost:3000
+  #   depends_on:
+  #     directus:
+  #       condition: service_started
+  #   volumes:
+  #     - ./site:/app
+  #     - /app/node_modules
+  #     - /app/.next
+  #   networks:
+  #     - cpts_network
+  #   restart: unless-stopped
+
+  # Directus CMS (Interface d'administration)
+  directus:
+    image: directus/directus:latest
+    container_name: cpts_directus
+    ports:
+      - "8055:8055"
+    environment:
+      - KEY=${DIRECTUS_KEY:-your-secret-key-here}
+      - SECRET=${DIRECTUS_SECRET:-your-secret-secret-here}
+      - DB_CLIENT=pg
+      - DB_HOST=postgres_directus
+      - DB_PORT=5432
+      - DB_DATABASE=directus
+      - DB_USER=admin
+      - DB_PASSWORD=admin
+      - ADMIN_EMAIL=corentinfredj.dev@gmail.com
+      - ADMIN_PASSWORD=$Ki26736846wI!
+      - CORS_ENABLED=true
+      - CORS_ORIGIN=http://localhost:3000
+    depends_on:
+      postgres_directus:
+        condition: service_healthy
+    volumes:
+      - directus_uploads:/directus/uploads
+    networks:
+      - cpts_network
+    restart: unless-stopped
+
+  # Interface d'administration PostgreSQL (optionnel)
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: cpts_pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@cptsdesmauges.fr
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_PASSWORD:-admin}
+      PGADMIN_CONFIG_SERVER_MODE: 'False'
+    ports:
+      - "5050:80"
+    depends_on:
+      - postgres_directus
+    networks:
+      - cpts_network
+    profiles:
+      - tools
+
+volumes:
+  postgres_directus_data:
+    driver: local
+  directus_uploads:
+    driver: local
+
+networks:
+  cpts_network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
