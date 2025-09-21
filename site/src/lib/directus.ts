@@ -1,4 +1,4 @@
-import { createDirectus, rest, readItems, readItem, readSingleton } from '@directus/sdk'
+import { createDirectus, rest } from '@directus/sdk'
 
 // Types pour les collections Directus
 export interface Article {
@@ -9,6 +9,8 @@ export interface Article {
   excerpt?: string
   featured_image?: string
   image?: string
+  couleur_de_fond?: string
+  couleur_texte?: string
   status: 'published' | 'draft' | 'archived'
   date_created: string
   date_updated: string
@@ -65,8 +67,17 @@ export interface Accueil {
   titre_informations_couleur: string
   couleur_texte_section_informations: string
   couleur_fond_section_information: string
-  nombre_article_caroussel: number
+  titre_evenements: string
+  sous_titre_evenements: string
+  titre_evenements_couleur: string
+  couleur_texte_section_evenements: string
+  couleur_fond_section_evenements: string
   articles_a_la_une?: Article[]
+  titre_partenaires?: string
+  sous_titre_partenaires?: string
+  titre_partenaires_couleur?: string
+  couleur_fond_section_partenaires?: string
+  couleur_texte_section_partenaires?: string
   status: 'published' | 'draft' | 'archived'
   date_created: string
   date_updated: string
@@ -124,13 +135,88 @@ export interface Mission {
   titre: string
   sous_titre: string
   description: string
-  projet_id: any // Relation M2A vers projets
+  projet_id: string // Relation M2A vers projets
   status: 'published' | 'draft' | 'archived'
   sort: string | null
   user_created: string
   date_created: string
   user_updated: string | null
   date_updated: string | null
+}
+
+export interface Evenement {
+  id: number
+  titre: string
+  resume: string
+  contenu: string
+  image?: string
+  couleur_de_fond?: string
+  couleur_texte?: string
+  etiquettes?: Tag[]
+  accueil_id: string
+  date_debut: string
+  date_fin: string
+  status: 'published' | 'draft' | 'archived'
+  sort: string | null
+  user_created: string
+  date_created: string
+  user_updated: string | null
+  date_updated: string | null
+}
+
+export interface Bouton {
+  id: number
+  status: 'published' | 'draft' | 'archived'
+  user_created: string
+  date_created: string
+  user_updated: string | null
+  date_updated: string | null
+  couleur_texte: string
+  couleur_fond: string
+  couleur_bordure?: string
+  survol_type: 'agrandissement' | 'changement_de_couleur_de_fond' | 'ombre_portee' | 'changement_opacite' | 'deplacement_vers_le_haut' | 'rotation_legere'
+}
+
+export interface Partenaire {
+  id: number
+  status: 'published' | 'draft' | 'archived'
+  sort: string | null
+  user_created: string
+  date_created: string
+  user_updated: string | null
+  date_updated: string | null
+  nom: string
+  logo?: string
+  description?: string
+  redirection?: string
+}
+
+export interface PiedDePage {
+  id: number
+  status: 'published' | 'draft' | 'archived'
+  user_created: string
+  date_created: string
+  user_updated: string | null
+  date_updated: string | null
+  couleur_de_fond: string
+  couleur_texte: string
+  numero_telephone: string
+  adresse: string
+  mail: string
+}
+
+export interface ReseauSocial {
+  id: number
+  status: 'published' | 'draft' | 'archived'
+  sort: string | null
+  user_created: string
+  date_created: string
+  user_updated: string | null
+  date_updated: string | null
+  nom: string
+  nom_visible: boolean
+  redirection: string
+  logo?: string
 }
 
 // Schéma Directus
@@ -143,6 +229,11 @@ export interface DirectusSchema {
   entete: Entete[]
   projets: Projet[]
   missions: Mission[]
+  evenements: Evenement[]
+  boutons: Bouton[]
+  partenaires: Partenaire[]
+  pied_de_page: PiedDePage[]
+  reseaux_sociaux: ReseauSocial[]
 }
 
 // Configuration du client Directus
@@ -307,7 +398,7 @@ export const directusClient = {
                         console.log(`Première étiquette etiquettes_id:`, article.etiquettes[0]?.etiquettes_id)
                         
                         // Extraire les IDs des étiquettes (au cas où ce seraient des objets)
-                        const etiquettesIds = article.etiquettes.map((etiquette: any) => {
+                        const etiquettesIds = article.etiquettes.map((etiquette: { etiquettes_id: number } | number) => {
                           console.log(`Étiquette à traiter:`, etiquette, `Type:`, typeof etiquette)
                           // Utiliser etiquettes_id au lieu de id pour les relations M2M
                           return typeof etiquette === 'object' ? etiquette.etiquettes_id : etiquette
@@ -518,6 +609,370 @@ export const directusClient = {
           
           const data = await response.json()
           return data.data || data
+        } catch (error) {
+          throw error
+        }
+      },
+
+      // Événements
+      async getEvenements() {
+        try {
+          const response = await fetch('/api/directus/items/evenements?fields=*,etiquettes.*&sort=date_debut', {
+            method: 'GET',
+            headers: {
+              'Cache-Control': 'no-cache, no-store, must-revalidate',
+              'Pragma': 'no-cache',
+              'Expires': '0'
+            }
+          })
+          
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`)
+          }
+          
+          const data = await response.json()
+          const evenements = data.data || data
+          
+          // Traiter chaque événement pour récupérer les étiquettes complètes
+          if (Array.isArray(evenements)) {
+            for (const evenement of evenements) {
+              // Construit l'URL complète pour l'image
+              if (evenement.image && !evenement.image.startsWith('http')) {
+                evenement.image = `${process.env.NEXT_PUBLIC_DIRECTUS_URL || 'http://localhost:8055'}/assets/${evenement.image}`
+              }
+              
+              // Récupérer les étiquettes complètes pour cet événement
+              if (evenement.etiquettes && evenement.etiquettes.length > 0) {
+                try {
+                  const etiquettesIds = evenement.etiquettes.map((etiquette: { etiquettes_id: number } | number) => {
+                    return typeof etiquette === 'object' ? etiquette.etiquettes_id : etiquette
+                  }).join(',')
+                  
+                  const tagsResponse = await fetch(`/api/directus/items/etiquettes?filter[id][_in]=${etiquettesIds}`, {
+                    method: 'GET',
+                    headers: {
+                      'Cache-Control': 'no-cache, no-store, must-revalidate',
+                      'Pragma': 'no-cache',
+                      'Expires': '0'
+                    }
+                  })
+                  
+                  if (tagsResponse.ok) {
+                    const tagsData = await tagsResponse.json()
+                    evenement.etiquettes = tagsData.data || tagsData
+                  }
+                } catch (error) {
+                  console.error('Erreur lors de la récupération des étiquettes pour l\'événement:', error)
+                }
+              }
+            }
+          }
+          
+          return evenements
+        } catch (error) {
+          throw error
+        }
+      },
+
+      // Événement par ID
+      async getEvenement(id: number) {
+        try {
+          const response = await fetch(`/api/directus/items/evenements/${id}?fields=*,etiquettes.*`, {
+            method: 'GET',
+            headers: {
+              'Cache-Control': 'no-cache, no-store, must-revalidate',
+              'Pragma': 'no-cache',
+              'Expires': '0'
+            }
+          })
+          
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`)
+          }
+          
+          const data = await response.json()
+          const evenement = data.data || data
+          
+          // Construit l'URL complète pour l'image
+          if (evenement.image && !evenement.image.startsWith('http')) {
+            evenement.image = `${process.env.NEXT_PUBLIC_DIRECTUS_URL || 'http://localhost:8055'}/assets/${evenement.image}`
+          }
+          
+          // Récupérer les étiquettes complètes pour cet événement
+          if (evenement.etiquettes && evenement.etiquettes.length > 0) {
+            try {
+              const etiquettesIds = evenement.etiquettes.map((etiquette: { etiquettes_id: number } | number) => {
+                return typeof etiquette === 'object' ? etiquette.etiquettes_id : etiquette
+              }).join(',')
+              
+              const tagsResponse = await fetch(`/api/directus/items/etiquettes?filter[id][_in]=${etiquettesIds}`, {
+                method: 'GET',
+                headers: {
+                  'Cache-Control': 'no-cache, no-store, must-revalidate',
+                  'Pragma': 'no-cache',
+                  'Expires': '0'
+                }
+              })
+              
+              if (tagsResponse.ok) {
+                const tagsData = await tagsResponse.json()
+                evenement.etiquettes = tagsData.data || tagsData
+              }
+            } catch (error) {
+              console.error('Erreur lors de la récupération des étiquettes pour l\'événement:', error)
+            }
+          }
+          
+          return evenement
+        } catch (error) {
+          throw error
+        }
+      },
+
+      // Boutons
+      async getBoutons() {
+        try {
+          const response = await fetch('/api/directus/items/boutons?filter[status][_eq]=published', {
+            method: 'GET',
+            headers: {
+              'Cache-Control': 'no-cache, no-store, must-revalidate',
+              'Pragma': 'no-cache',
+              'Expires': '0'
+            }
+          })
+          
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`)
+          }
+          
+          const data = await response.json()
+          console.log('🔘 Données boutons reçues:', data)
+          
+          // Si c'est un objet avec une propriété data, retourner data.data
+          if (data.data && typeof data.data === 'object') {
+            return Array.isArray(data.data) ? data.data : [data.data]
+          }
+          
+          // Sinon retourner data directement
+          return Array.isArray(data) ? data : [data]
+        } catch (error) {
+          throw error
+        }
+      },
+
+      // Bouton par ID
+      async getBouton(id: number) {
+        try {
+          const response = await fetch(`/api/directus/items/boutons/${id}`, {
+            method: 'GET',
+            headers: {
+              'Cache-Control': 'no-cache, no-store, must-revalidate',
+              'Pragma': 'no-cache',
+              'Expires': '0'
+            }
+          })
+          
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`)
+          }
+          
+          const data = await response.json()
+          console.log('🔘 Bouton individuel reçu:', data)
+          
+          // Si c'est un objet avec une propriété data, retourner data.data
+          if (data.data && typeof data.data === 'object') {
+            return data.data
+          }
+          
+          // Sinon retourner data directement
+          return data
+        } catch (error) {
+          throw error
+        }
+      },
+
+      // Partenaires
+      async getPartenaires() {
+        try {
+          const response = await fetch('/api/directus/items/partenaires?filter[status][_eq]=published&sort=sort', {
+            method: 'GET',
+            headers: {
+              'Cache-Control': 'no-cache, no-store, must-revalidate',
+              'Pragma': 'no-cache',
+              'Expires': '0'
+            }
+          })
+          
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`)
+          }
+          
+          const data = await response.json()
+          console.log('🤝 Données partenaires reçues:', data)
+          
+          // Si c'est un objet avec une propriété data, retourner data.data
+          if (data.data && typeof data.data === 'object') {
+            const partenaires = Array.isArray(data.data) ? data.data : [data.data]
+            
+            // Traiter les URLs des images
+            partenaires.forEach((partenaire: Partenaire) => {
+              if (partenaire.logo && !partenaire.logo.startsWith('http')) {
+                partenaire.logo = `${process.env.NEXT_PUBLIC_DIRECTUS_URL || 'http://localhost:8055'}/assets/${partenaire.logo}`
+              }
+            })
+            
+            return partenaires
+          }
+          
+          // Sinon retourner data directement
+          return Array.isArray(data) ? data : [data]
+        } catch (error) {
+          throw error
+        }
+      },
+
+      // Partenaire par ID
+      async getPartenaire(id: number) {
+        try {
+          const response = await fetch(`/api/directus/items/partenaires/${id}`, {
+            method: 'GET',
+            headers: {
+              'Cache-Control': 'no-cache, no-store, must-revalidate',
+              'Pragma': 'no-cache',
+              'Expires': '0'
+            }
+          })
+          
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`)
+          }
+          
+          const data = await response.json()
+          console.log('🤝 Partenaire individuel reçu:', data)
+          
+          // Si c'est un objet avec une propriété data, retourner data.data
+          if (data.data && typeof data.data === 'object') {
+            const partenaire = data.data
+            
+            // Traiter l'URL de l'image
+            if (partenaire.logo && !partenaire.logo.startsWith('http')) {
+              partenaire.logo = `${process.env.NEXT_PUBLIC_DIRECTUS_URL || 'http://localhost:8055'}/assets/${partenaire.logo}`
+            }
+            
+            return partenaire
+          }
+          
+          // Sinon retourner data directement
+          return data
+        } catch (error) {
+          throw error
+        }
+      },
+
+      // Pied de page
+      async getPiedDePage() {
+        try {
+          const response = await fetch('/api/directus/items/pied_de_page?filter[status][_eq]=published', {
+            method: 'GET',
+            headers: {
+              'Cache-Control': 'no-cache, no-store, must-revalidate',
+              'Pragma': 'no-cache',
+              'Expires': '0'
+            }
+          })
+          
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`)
+          }
+          
+          const data = await response.json()
+          console.log('🦶 Données pied de page reçues:', data)
+          
+          // Si c'est un objet avec une propriété data, retourner data.data
+          if (data.data && typeof data.data === 'object') {
+            return Array.isArray(data.data) ? data.data : [data.data]
+          }
+          
+          // Sinon retourner data directement
+          return Array.isArray(data) ? data : [data]
+        } catch (error) {
+          throw error
+        }
+      },
+
+      // Réseaux sociaux
+      async getReseauxSociaux() {
+        try {
+          const response = await fetch('/api/directus/items/reseaux_sociaux?filter[status][_eq]=published&sort=sort', {
+            method: 'GET',
+            headers: {
+              'Cache-Control': 'no-cache, no-store, must-revalidate',
+              'Pragma': 'no-cache',
+              'Expires': '0'
+            }
+          })
+          
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`)
+          }
+          
+          const data = await response.json()
+          console.log('📱 Données réseaux sociaux reçues:', data)
+          
+          // Si c'est un objet avec une propriété data, retourner data.data
+          if (data.data && typeof data.data === 'object') {
+            const reseaux = Array.isArray(data.data) ? data.data : [data.data]
+            
+            // Traiter les URLs des images
+            reseaux.forEach((reseau: ReseauSocial) => {
+              if (reseau.logo && !reseau.logo.startsWith('http')) {
+                reseau.logo = `${process.env.NEXT_PUBLIC_DIRECTUS_URL || 'http://localhost:8055'}/assets/${reseau.logo}`
+              }
+            })
+            
+            return reseaux
+          }
+          
+          // Sinon retourner data directement
+          return Array.isArray(data) ? data : [data]
+        } catch (error) {
+          throw error
+        }
+      },
+
+      // Réseau social par ID
+      async getReseauSocial(id: number) {
+        try {
+          const response = await fetch(`/api/directus/items/reseaux_sociaux/${id}`, {
+            method: 'GET',
+            headers: {
+              'Cache-Control': 'no-cache, no-store, must-revalidate',
+              'Pragma': 'no-cache',
+              'Expires': '0'
+            }
+          })
+          
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`)
+          }
+          
+          const data = await response.json()
+          console.log('📱 Réseau social individuel reçu:', data)
+          
+          // Si c'est un objet avec une propriété data, retourner data.data
+          if (data.data && typeof data.data === 'object') {
+            const reseau = data.data
+            
+            // Traiter l'URL de l'image
+            if (reseau.logo && !reseau.logo.startsWith('http')) {
+              reseau.logo = `${process.env.NEXT_PUBLIC_DIRECTUS_URL || 'http://localhost:8055'}/assets/${reseau.logo}`
+            }
+            
+            return reseau
+          }
+          
+          // Sinon retourner data directement
+          return data
         } catch (error) {
           throw error
         }

@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { directusClient, type Article, type Tag, type ReglagesGeneraux, type Accueil, type Logo, type Entete, type Projet, type Mission } from '@/lib/directus'
+import { directusClient, type Article, type Tag, type ReglagesGeneraux, type Accueil, type Logo, type Entete, type Projet, type Mission, type Evenement, type Bouton, type Partenaire, type PiedDePage, type ReseauSocial } from '@/lib/directus'
 
 // Hook pour les articles
 export function useArticles() {
@@ -253,4 +253,238 @@ export function useArticlesALaUne() {
   }, [])
 
   return { articles, loading, error }
+}
+
+// Hook pour les événements
+export function useEvenements() {
+  const [evenements, setEvenements] = useState<Evenement[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+
+  useEffect(() => {
+    const fetchEvenements = async () => {
+      try {
+        setLoading(true)
+        const data = await directusClient.getEvenements()
+        setEvenements(data as Evenement[])
+      } catch (err) {
+        setError(err instanceof Error ? err.message : 'Erreur lors du chargement des événements')
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchEvenements()
+  }, [])
+
+  return { evenements, loading, error }
+}
+
+// Hook pour un événement spécifique
+export function useEvenement(id: number) {
+  const [evenement, setEvenement] = useState<Evenement | null>(null)
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+
+  useEffect(() => {
+    const fetchEvenement = async () => {
+      try {
+        setLoading(true)
+        const data = await directusClient.getEvenement(id)
+        setEvenement(data as Evenement)
+      } catch (err) {
+        setError(err instanceof Error ? err.message : 'Erreur lors du chargement de l\'événement')
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    if (id) {
+      fetchEvenement()
+    }
+  }, [id])
+
+  return { evenement, loading, error }
+}
+
+// Hook pour les boutons
+export function useBoutons() {
+  const [boutons, setBoutons] = useState<Bouton[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+
+  useEffect(() => {
+    const fetchBoutons = async () => {
+      try {
+        setLoading(true)
+        const data = await directusClient.getBoutons()
+        setBoutons(data as Bouton[])
+      } catch (err) {
+        setError(err instanceof Error ? err.message : 'Erreur lors du chargement des boutons')
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchBoutons()
+  }, [])
+
+  return { boutons, loading, error }
+}
+
+// Hook pour un bouton spécifique
+export function useBouton(id: number) {
+  const [bouton, setBouton] = useState<Bouton | null>(null)
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+
+  useEffect(() => {
+    const fetchBouton = async () => {
+      try {
+        setLoading(true)
+        const data = await directusClient.getBouton(id)
+        setBouton(data as Bouton)
+      } catch (err) {
+        setError(err instanceof Error ? err.message : 'Erreur lors du chargement du bouton')
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    if (id) {
+      fetchBouton()
+    }
+  }, [id])
+
+  return { bouton, loading, error }
+}
+
+// Hook pour les partenaires
+export function usePartenaires() {
+  const [partenaires, setPartenaires] = useState<Partenaire[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+
+  useEffect(() => {
+    const fetchPartenaires = async () => {
+      try {
+        setLoading(true)
+        const data = await directusClient.getPartenaires()
+        setPartenaires(data as Partenaire[])
+      } catch (err) {
+        setError(err instanceof Error ? err.message : 'Erreur lors du chargement des partenaires')
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchPartenaires()
+  }, [])
+
+  return { partenaires, loading, error }
+}
+
+// Hook pour un partenaire spécifique
+export function usePartenaire(id: number) {
+  const [partenaire, setPartenaire] = useState<Partenaire | null>(null)
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+
+  useEffect(() => {
+    const fetchPartenaire = async () => {
+      try {
+        setLoading(true)
+        const data = await directusClient.getPartenaire(id)
+        setPartenaire(data as Partenaire)
+      } catch (err) {
+        setError(err instanceof Error ? err.message : 'Erreur lors du chargement du partenaire')
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    if (id) {
+      fetchPartenaire()
+    }
+  }, [id])
+
+  return { partenaire, loading, error }
+}
+
+// Hook pour le pied de page
+export function usePiedDePage() {
+  const [piedDePage, setPiedDePage] = useState<PiedDePage | null>(null)
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+
+  useEffect(() => {
+    const fetchPiedDePage = async () => {
+      try {
+        setLoading(true)
+        const data = await directusClient.getPiedDePage()
+        // Prendre le premier élément (il ne devrait y en avoir qu'un)
+        setPiedDePage(Array.isArray(data) ? data[0] || null : data)
+      } catch (err) {
+        setError(err instanceof Error ? err.message : 'Erreur lors du chargement du pied de page')
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchPiedDePage()
+  }, [])
+
+  return { piedDePage, loading, error }
+}
+
+// Hook pour les réseaux sociaux
+export function useReseauxSociaux() {
+  const [reseauxSociaux, setReseauxSociaux] = useState<ReseauSocial[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+
+  useEffect(() => {
+    const fetchReseauxSociaux = async () => {
+      try {
+        setLoading(true)
+        const data = await directusClient.getReseauxSociaux()
+        setReseauxSociaux(data as ReseauSocial[])
+      } catch (err) {
+        setError(err instanceof Error ? err.message : 'Erreur lors du chargement des réseaux sociaux')
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchReseauxSociaux()
+  }, [])
+
+  return { reseauxSociaux, loading, error }
+}
+
+// Hook pour un réseau social spécifique
+export function useReseauSocial(id: number) {
+  const [reseauSocial, setReseauSocial] = useState<ReseauSocial | null>(null)
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+
+  useEffect(() => {
+    const fetchReseauSocial = async () => {
+      try {
+        setLoading(true)
+        const data = await directusClient.getReseauSocial(id)
+        setReseauSocial(data as ReseauSocial)
+      } catch (err) {
+        setError(err instanceof Error ? err.message : 'Erreur lors du chargement du réseau social')
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    if (id) {
+      fetchReseauSocial()
+    }
+  }, [id])
+
+  return { reseauSocial, loading, error }
 }
