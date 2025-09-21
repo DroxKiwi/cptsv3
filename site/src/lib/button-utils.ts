@@ -10,7 +10,13 @@ export function getButtonStyles(bouton: Bouton | null | undefined) {
     backgroundColor: bouton.couleur_fond || undefined,
     color: bouton.couleur_texte || undefined,
     borderColor: bouton.couleur_bordure || undefined,
-    border: bouton.couleur_bordure ? `1px solid ${bouton.couleur_bordure}` : undefined,
+    border: bouton.couleur_bordure ? 
+      `${bouton.epaisseur_bordures ? 
+        (typeof bouton.epaisseur_bordures === 'string' && bouton.epaisseur_bordures.includes('px') ? 
+          bouton.epaisseur_bordures : 
+          `${bouton.epaisseur_bordures}px`) 
+        : '1px'} solid ${bouton.couleur_bordure}` 
+      : undefined,
   }
 }
 

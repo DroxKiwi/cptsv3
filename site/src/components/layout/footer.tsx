@@ -48,25 +48,25 @@ export function Footer() {
           <div className="space-y-4 sm:col-span-2 lg:col-span-1">
             <div className="flex items-center space-x-3">
               {logoLoading ? (
-                <div className="h-8 w-8 sm:h-10 sm:w-10 rounded-full bg-gray-200 animate-pulse flex-shrink-0"></div>
+                <div className="h-16 w-16 sm:h-20 sm:w-20 rounded-full bg-gray-200 animate-pulse flex-shrink-0"></div>
               ) : logo?.logo ? (
-                <div className="relative h-8 w-8 sm:h-10 sm:w-10 flex-shrink-0">
+                <div className="relative h-16 w-16 sm:h-20 sm:w-20 flex-shrink-0">
                   <Image
                     src={logo.logo}
                     alt="Logo CPTS"
                     fill
-                    sizes="(max-width: 640px) 32px, 40px"
+                    sizes="(max-width: 640px) 64px, 80px"
                     className="object-contain"
                     onError={(e) => {
                       // Fallback vers le texte si l'image ne charge pas
                       e.currentTarget.style.display = 'none'
-                      e.currentTarget.parentElement!.innerHTML = '<div class="h-8 w-8 sm:h-10 sm:w-10 rounded-full bg-primary flex items-center justify-center flex-shrink-0"><span class="text-primary-foreground font-bold text-sm sm:text-base">CPTS</span></div>'
+                      e.currentTarget.parentElement!.innerHTML = '<div class="h-16 w-16 sm:h-20 sm:w-20 rounded-full bg-primary flex items-center justify-center flex-shrink-0"><span class="text-primary-foreground font-bold text-lg sm:text-xl">CPTS</span></div>'
                     }}
                   />
                 </div>
               ) : (
-                <div className="h-8 w-8 sm:h-10 sm:w-10 rounded-full bg-primary flex items-center justify-center flex-shrink-0">
-                  <span className="text-primary-foreground font-bold text-sm sm:text-base">CPTS</span>
+                <div className="h-16 w-16 sm:h-20 sm:w-20 rounded-full bg-primary flex items-center justify-center flex-shrink-0">
+                  <span className="text-primary-foreground font-bold text-lg sm:text-xl">CPTS</span>
                 </div>
               )}
             </div>
@@ -148,7 +148,7 @@ export function Footer() {
                         style={{ backgroundColor: piedDePage?.couleur_texte || '#9CA3AF' }}
                       ></div>
                     )}
-                    {reseau.nom_visible && (
+                    {reseau.visible && (
                       <span className="text-xs sm:text-sm">{reseau.nom}</span>
                     )}
                   </Link>

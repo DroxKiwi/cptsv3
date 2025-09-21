@@ -43,44 +43,40 @@ export interface ReglagesGeneraux {
   epaisseur_sous_titre?: string
   epaisseur_corps?: string
   epaisseur_indication?: string
+  couleur_titre?: string
+  couleur_sous_titre?: string
+  couleur_corps?: string
+  couleur_indication?: string
+  couleur_primaire?: string
+  couleur_secondaire?: string
+  couleur_tertiaire?: string
+  epaisseur_bordures?: string
+  couleur_ombrage?: string
+  epaisseur_ombrage?: string
+  ombrage?: boolean
 }
 
 export interface Accueil {
   id: number
-  titre_principal: string
-  sous_titre_principal: string
-  titre_principal_couleur: string
-  couleur_texte_section_principale: string
-  couleur_fond_section_principale: string
-  titre_projets: string
-  sous_titre_projets: string
-  titre_projets_couleur: string
-  couleur_texte_section_projets: string
-  couleur_fond_section_projets: string
-  titre_actualites: string
-  sous_titre_actualites: string
-  titre_actualites_couleur: string
-  couleur_texte_section_actualites: string
-  couleur_fond_section_actualites: string
-  titre_informations: string
-  sous_titre_informations: string
-  titre_informations_couleur: string
-  couleur_texte_section_informations: string
-  couleur_fond_section_information: string
-  titre_evenements: string
-  sous_titre_evenements: string
-  titre_evenements_couleur: string
-  couleur_texte_section_evenements: string
-  couleur_fond_section_evenements: string
-  articles_a_la_une?: Article[]
-  titre_partenaires?: string
-  sous_titre_partenaires?: string
-  titre_partenaires_couleur?: string
-  couleur_fond_section_partenaires?: string
-  couleur_texte_section_partenaires?: string
   status: 'published' | 'draft' | 'archived'
+  user_created: string
   date_created: string
-  date_updated: string
+  user_updated: string | null
+  date_updated: string | null
+  articles_a_la_une?: Article[]
+  evenements_a_la_une?: Evenement[]
+  titre_principal: string
+  contenu_principal: string
+  titre_projets: string
+  contenu_projets: string
+  titre_actualites: string
+  contenu_actualites: string
+  titre_evenements: string
+  contenu_evenements: string
+  titre_informations: string
+  contenu_informations: string
+  titre_partenaires: string
+  contenu_partenaires: string
 }
 
 export interface Logo {
@@ -174,6 +170,7 @@ export interface Bouton {
   couleur_texte: string
   couleur_fond: string
   couleur_bordure?: string
+  epaisseur_bordures?: string
   survol_type: 'agrandissement' | 'changement_de_couleur_de_fond' | 'ombre_portee' | 'changement_opacite' | 'deplacement_vers_le_haut' | 'rotation_legere'
 }
 
@@ -214,9 +211,33 @@ export interface ReseauSocial {
   user_updated: string | null
   date_updated: string | null
   nom: string
-  nom_visible: boolean
+  visible: boolean
   redirection: string
   logo?: string
+}
+
+export interface ChiffresCles {
+  id: number
+  status: 'published' | 'draft' | 'archived'
+  user_created: string
+  date_created: string
+  user_updated: string | null
+  date_updated: string | null
+  professionnels: string
+  communes: string
+  habitants: string
+}
+
+export interface Presentation {
+  id: number
+  status: 'published' | 'draft' | 'archived'
+  user_created: string
+  date_created: string
+  user_updated: string | null
+  date_updated: string | null
+  titre_principal: string
+  image_principale: string
+  test_editeur_avance: string
 }
 
 // Schéma Directus
@@ -234,6 +255,8 @@ export interface DirectusSchema {
   partenaires: Partenaire[]
   pied_de_page: PiedDePage[]
   reseaux_sociaux: ReseauSocial[]
+  chiffres_cles: ChiffresCles[]
+  presentation: Presentation[]
 }
 
 // Configuration du client Directus
@@ -447,6 +470,76 @@ export const directusClient = {
             }
           } else {
             accueil.articles_a_la_une = []
+          }
+          
+          // Récupérer les événements spécifiés dans evenements_a_la_une avec leurs étiquettes complètes
+          if (accueil.evenements_a_la_une && accueil.evenements_a_la_une.length > 0) {
+            try {
+              const evenementsPromises = accueil.evenements_a_la_une.map(async (evenementId: number) => {
+                try {
+                  const evenementResponse = await fetch(`/api/directus/items/evenements/${evenementId}?fields=*,etiquettes.*`, {
+                    method: 'GET',
+                    headers: {
+                      'Cache-Control': 'no-cache, no-store, must-revalidate',
+                      'Pragma': 'no-cache',
+                      'Expires': '0'
+                    }
+                  })
+                  
+                  if (evenementResponse.ok) {
+                    const evenementData = await evenementResponse.json()
+                    const evenement = evenementData.data || evenementData
+                    
+                    // Récupérer les étiquettes complètes pour cet événement
+                    if (evenement.etiquettes && evenement.etiquettes.length > 0) {
+                      try {
+                        console.log(`Récupération des étiquettes pour l'événement ${evenementId}:`, evenement.etiquettes)
+                        
+                        // Extraire les IDs des étiquettes (au cas où ce seraient des objets)
+                        const etiquettesIds = evenement.etiquettes.map((etiquette: { etiquettes_id: number } | number) => {
+                          return typeof etiquette === 'object' ? etiquette.etiquettes_id : etiquette
+                        }).join(',')
+                        
+                        const tagsResponse = await fetch(`/api/directus/items/etiquettes?filter[id][_in]=${etiquettesIds}`, {
+                          method: 'GET',
+                          headers: {
+                            'Cache-Control': 'no-cache, no-store, must-revalidate',
+                            'Pragma': 'no-cache',
+                            'Expires': '0'
+                          }
+                        })
+                        
+                        if (tagsResponse.ok) {
+                          const tagsData = await tagsResponse.json()
+                          evenement.etiquettes = tagsData.data || tagsData
+                        }
+                      } catch (error) {
+                        console.error('Erreur lors de la récupération des étiquettes de l\'événement:', error)
+                      }
+                    }
+                    
+                    // Traiter l'URL de l'image
+                    if (evenement.image && !evenement.image.startsWith('http')) {
+                      evenement.image = `${process.env.NEXT_PUBLIC_DIRECTUS_URL || 'http://localhost:8055'}/assets/${evenement.image}`
+                    }
+                    
+                    return evenement
+                  }
+                  return null
+                } catch (error) {
+                  console.error('Erreur lors de la récupération de l\'événement:', error)
+                  return null
+                }
+              })
+              
+              const evenements = await Promise.all(evenementsPromises)
+              accueil.evenements_a_la_une = evenements.filter(evenement => evenement !== null)
+            } catch (error) {
+              console.error('Erreur lors de la récupération des événements:', error)
+              accueil.evenements_a_la_une = []
+            }
+          } else {
+            accueil.evenements_a_la_une = []
           }
           
           return accueil
@@ -973,6 +1066,68 @@ export const directusClient = {
           
           // Sinon retourner data directement
           return data
+        } catch (error) {
+          throw error
+        }
+      },
+
+      // Chiffres clés
+      async getChiffresCles() {
+        try {
+          const response = await fetch('/api/directus/items/chiffres_cles', {
+            method: 'GET',
+            headers: {
+              'Cache-Control': 'no-cache, no-store, must-revalidate',
+              'Pragma': 'no-cache',
+              'Expires': '0'
+            }
+          })
+          
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`)
+          }
+          
+          const data = await response.json()
+          console.log('📊 Données chiffres clés reçues:', data)
+          
+          // Si c'est un objet avec une propriété data, retourner data.data
+          if (data.data && typeof data.data === 'object') {
+            return Array.isArray(data.data) ? data.data : [data.data]
+          }
+          
+          // Sinon retourner data directement
+          return Array.isArray(data) ? data : [data]
+        } catch (error) {
+          throw error
+        }
+      },
+
+      // Présentation
+      async getPresentation() {
+        try {
+          const response = await fetch('/api/directus/items/presentation', {
+            method: 'GET',
+            headers: {
+              'Cache-Control': 'no-cache, no-store, must-revalidate',
+              'Pragma': 'no-cache',
+              'Expires': '0'
+            }
+          })
+          
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`)
+          }
+          
+          const data = await response.json()
+          console.log('📄 Données présentation reçues:', data)
+          
+          // Si c'est un objet avec une propriété data, retourner data.data
+          if (data.data && typeof data.data === 'object') {
+            return Array.isArray(data.data) ? data.data[0] : data.data
+          }
+          
+          // Sinon retourner data directement
+          return Array.isArray(data) ? data[0] : data
         } catch (error) {
           throw error
         }

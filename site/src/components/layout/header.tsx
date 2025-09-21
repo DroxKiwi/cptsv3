@@ -8,6 +8,7 @@ import { cn } from "@/lib/utils"
 import { Menu, Facebook, Linkedin, XIcon } from "lucide-react"
 import { useLogo, useEntete, useReseauxSociaux } from "@/hooks/useDirectus"
 import Image from "next/image"
+import { useState } from "react"
 
 // Fonction pour convertir hex en RGB
 function hexToRgb(hex: string): string {
@@ -68,8 +69,10 @@ export function Header() {
   const { logo, loading: logoLoading } = useLogo()
   const { entete, loading: enteteLoading } = useEntete()
   const { reseauxSociaux, loading: reseauxLoading } = useReseauxSociaux()
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
   
   const navigation = [
+    { name: entete?.titre_page_0 || "Accueil", href: "/" },
     { name: entete?.titre_page_1 || "Qui sommes nous ?", href: "/qui-sommes-nous" },
     { name: entete?.titre_page_2 || "Bureau / CA", href: "/bureau-ca" },
     { name: entete?.titre_page_3 || "Nos projets / missions", href: "/projets-missions" },
@@ -96,25 +99,25 @@ export function Header() {
           {/* Logo et titre - Mobile First */}
           <div className="flex items-center space-x-2 flex-shrink-0">
             {logoLoading ? (
-              <div className="h-6 w-6 sm:h-8 sm:w-8 rounded-full bg-gray-200 animate-pulse"></div>
+              <div className="h-12 w-12 sm:h-16 sm:w-16 rounded-full bg-gray-200 animate-pulse"></div>
             ) : logo?.logo ? (
-              <div className="h-6 w-6 sm:h-8 sm:w-8 relative">
+              <div className="h-12 w-12 sm:h-16 sm:w-16 relative">
                 <Image
                   src={logo.logo}
                   alt="Logo CPTS"
                   fill
-                  sizes="(max-width: 640px) 24px, 32px"
+                  sizes="(max-width: 640px) 48px, 64px"
                   className="object-contain"
                   onError={(e) => {
                     // Fallback vers le texte si l'image ne charge pas
                     e.currentTarget.style.display = 'none'
-                    e.currentTarget.parentElement!.innerHTML = '<div class="h-6 w-6 sm:h-8 sm:w-8 rounded-full bg-primary flex items-center justify-center"><span class="text-primary-foreground font-bold text-xs sm:text-sm">CPTS</span></div>'
+                    e.currentTarget.parentElement!.innerHTML = '<div class="h-12 w-12 sm:h-16 sm:w-16 rounded-full bg-primary flex items-center justify-center"><span class="text-primary-foreground font-bold text-sm sm:text-lg">CPTS</span></div>'
                   }}
                 />
               </div>
             ) : (
-              <div className="h-6 w-6 sm:h-8 sm:w-8 rounded-full bg-primary flex items-center justify-center">
-                <span className="text-primary-foreground font-bold text-xs sm:text-sm">CPTS</span>
+              <div className="h-12 w-12 sm:h-16 sm:w-16 rounded-full bg-primary flex items-center justify-center">
+                <span className="text-primary-foreground font-bold text-sm sm:text-lg">CPTS</span>
               </div>
             )}
             
@@ -149,24 +152,80 @@ export function Header() {
             </div>
           </div>
 
-          {/* Réseaux sociaux - Desktop seulement */}
-          <div className="hidden lg:flex items-center space-x-2 flex-shrink-0">
-            <Button variant="ghost" size="sm" asChild>
-              <Link href="https://facebook.com" target="_blank" rel="noopener noreferrer">
-                <Facebook className="h-4 w-4" />
+          {/* Navigation desktop - Seulement sur très grands écrans */}
+          <nav className="hidden 2xl:flex items-center justify-center flex-wrap gap-1 lg:gap-2 flex-1 max-w-4xl mx-2">
+            {navigation.map((item) => (
+              <Link
+                key={item.name}
+                href={item.href}
+                className="text-xs lg:text-sm font-medium hover:text-primary transition-colors px-1 lg:px-2 py-1 rounded whitespace-nowrap flex-shrink-0"
+                style={{ color: entete?.couleur_titres_pages || 'inherit' }}
+              >
+                {item.name}
               </Link>
-            </Button>
-            <Button variant="ghost" size="sm" asChild>
-              <Link href="https://linkedin.com" target="_blank" rel="noopener noreferrer">
-                <Linkedin className="h-4 w-4" />
-              </Link>
-            </Button>
+            ))}
+          </nav>
+
+          {/* Réseaux sociaux - Très grands écrans seulement */}
+          <div className="hidden 2xl:flex items-center space-x-2 flex-shrink-0">
+            {reseauxSociaux && reseauxSociaux.length > 0 ? (
+              reseauxSociaux.map((reseau) => (
+                <Button key={reseau.id} variant="ghost" size="sm" asChild>
+                  <Link 
+                    href={reseau.redirection} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    style={{ color: entete?.couleur_titres_pages }}
+                  >
+                    {reseau.logo ? (
+                      <div className="relative h-4 w-4">
+                        <Image
+                          src={reseau.logo}
+                          alt={reseau.nom}
+                          fill
+                          className="object-contain"
+                          onError={() => console.log('Erreur de chargement du logo:', reseau.nom)}
+                        />
+                      </div>
+                    ) : (
+                      <div className="h-4 w-4 bg-gray-300 rounded"></div>
+                    )}
+                    {reseau.visible && (
+                      <span className="text-sm ml-2">{reseau.nom}</span>
+                    )}
+                  </Link>
+                </Button>
+              ))
+            ) : (
+              <>
+                <Button variant="ghost" size="sm" asChild>
+                  <Link href="https://facebook.com" target="_blank" rel="noopener noreferrer">
+                    <Facebook className="h-4 w-4" />
+                  </Link>
+                </Button>
+                <Button variant="ghost" size="sm" asChild>
+                  <Link href="https://linkedin.com" target="_blank" rel="noopener noreferrer">
+                    <Linkedin className="h-4 w-4" />
+                  </Link>
+                </Button>
+              </>
+            )}
           </div>
 
-          {/* Menu mobile */}
-          <Sheet>
+          {/* Menu mobile - Mobile, tablette et desktop */}
+          <Sheet open={isMenuOpen} onOpenChange={setIsMenuOpen}>
             <SheetTrigger asChild>
-              <Button variant="ghost" size="sm" className="lg:hidden">
+              <Button 
+                variant="ghost" 
+                size="sm" 
+                className="2xl:hidden shadow-none hover:shadow-none focus:shadow-none active:shadow-none [&>*]:shadow-none"
+                style={{ 
+                  color: entete?.couleur_titres_pages || 'inherit',
+                  boxShadow: 'none !important',
+                  filter: 'none',
+                  textShadow: 'none'
+                }}
+              >
                 <Menu className="h-5 w-5" />
                 <span className="sr-only">Ouvrir le menu</span>
               </Button>
@@ -187,22 +246,22 @@ export function Header() {
                 style={{ color: entete?.couleur_texte || 'inherit' }}
               >
                 {/* Logo et titre dans le menu */}
-                <div className="flex items-center space-x-3 pb-4 border-b">
+                <div className="flex items-center space-x-4 pb-4 border-b ml-4">
                   {logoLoading ? (
-                    <div className="h-8 w-8 rounded-full bg-gray-200 animate-pulse"></div>
+                    <div className="h-12 w-12 rounded-full bg-gray-200 animate-pulse"></div>
                   ) : logo?.logo ? (
-                    <div className="h-8 w-8 relative">
+                    <div className="h-12 w-12 relative">
                       <Image
                         src={logo.logo}
                         alt="Logo CPTS"
                         fill
-                        sizes="32px"
+                        sizes="48px"
                         className="object-contain"
                       />
                     </div>
                   ) : (
-                    <div className="h-8 w-8 rounded-full bg-primary flex items-center justify-center">
-                      <span className="text-primary-foreground font-bold text-sm">CPTS</span>
+                    <div className="h-12 w-12 rounded-full bg-primary flex items-center justify-center">
+                      <span className="text-primary-foreground font-bold text-lg">CPTS</span>
                     </div>
                   )}
                   <div>
@@ -214,13 +273,13 @@ export function Header() {
                     ) : entete ? (
                       <>
                         <h2 
-                          className="text-base font-bold"
+                          className="text-lg font-bold"
                           style={{ color: entete.couleur_titre }}
                         >
                           {entete.titre}
                         </h2>
                         <p 
-                          className="text-xs"
+                          className="text-sm"
                           style={{ color: entete.couleur_sous_titre }}
                         >
                           {entete.sous_titre}
@@ -228,8 +287,8 @@ export function Header() {
                       </>
                     ) : (
                       <>
-                        <h2 className="text-base font-bold">CPTS des Mauges</h2>
-                        <p className="text-xs text-muted-foreground">Communauté Professionnelle Territoriale de Santé</p>
+                        <h2 className="text-lg font-bold">CPTS des Mauges</h2>
+                        <p className="text-sm text-muted-foreground">Communauté Professionnelle Territoriale de Santé</p>
                       </>
                     )}
                   </div>
@@ -243,6 +302,7 @@ export function Header() {
                       href={item.href}
                       className="text-sm font-medium py-3 px-4 rounded-md hover:bg-accent transition-colors"
                       style={{ color: entete?.couleur_titres_pages }}
+                      onClick={() => setIsMenuOpen(false)}
                     >
                       {item.name}
                     </Link>
@@ -259,6 +319,7 @@ export function Header() {
                           target="_blank" 
                           rel="noopener noreferrer"
                           style={{ color: entete?.couleur_titres_pages }}
+                          onClick={() => setIsMenuOpen(false)}
                         >
                           {reseau.logo ? (
                             <div className="relative h-4 w-4">
@@ -273,7 +334,7 @@ export function Header() {
                           ) : (
                             <div className="h-4 w-4 bg-gray-300 rounded"></div>
                           )}
-                          {reseau.nom_visible && (
+                          {reseau.visible && (
                             <span className="text-sm ml-2">{reseau.nom}</span>
                           )}
                         </Link>
@@ -286,19 +347,6 @@ export function Header() {
           </Sheet>
         </div>
 
-        {/* Navigation desktop - Centrée */}
-        <nav className="hidden lg:flex items-center justify-center space-x-6 mt-4 pt-4 border-t">
-          {navigation.map((item) => (
-            <Link
-              key={item.name}
-              href={item.href}
-              className="text-sm font-medium transition-colors hover:text-primary whitespace-nowrap"
-              style={{ color: entete?.couleur_titres_pages }}
-            >
-              {item.name}
-            </Link>
-          ))}
-        </nav>
       </div>
     </header>
   )

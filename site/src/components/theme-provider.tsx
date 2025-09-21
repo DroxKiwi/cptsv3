@@ -22,6 +22,13 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
           
           // Applique le CSS
           styleElement.textContent = themeCSS
+          
+          // Gère la classe ombrage-actif sur le body
+          if (reglages.ombrage) {
+            document.body.classList.add('ombrage-actif')
+          } else {
+            document.body.classList.remove('ombrage-actif')
+          }
         }
       }, [reglages, loading])
 

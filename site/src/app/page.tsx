@@ -1,24 +1,25 @@
 "use client"
 
-import { useAccueil, useProjets, useEvenements, useBoutons, usePartenaires, useLogo } from "@/hooks/useDirectus"
+import { useAccueil, useProjets, useBoutons, usePartenaires, useLogo } from "@/hooks/useDirectus"
 import { Button } from "@/components/ui/button"
 import { getButtonStyles, getButtonHoverHandlers } from "@/lib/button-utils"
 import { themeClasses } from "@/lib/theme"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
+import { ChiffresCles } from "@/components/custom-ui/chiffres-cles"
+import { RichContent } from "@/components/custom-ui/rich-content"
 import { ArrowRight, Calendar, Clock, ExternalLink } from "lucide-react"
 import Image from "next/image"
 
 export default function Home() {
   const { accueil, loading: accueilLoading } = useAccueil()
   const { projets, loading: projetsLoading } = useProjets()
-  const { evenements, loading: evenementsLoading } = useEvenements()
   const { boutons, loading: boutonsLoading } = useBoutons()
   const { partenaires, loading: partenairesLoading } = usePartenaires()
   const { logo, loading: logoLoading } = useLogo()
 
 
-  if (accueilLoading || projetsLoading || evenementsLoading || boutonsLoading || partenairesLoading) {
+  if (accueilLoading || projetsLoading || boutonsLoading || partenairesLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
@@ -34,22 +35,16 @@ export default function Home() {
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <h1 className="text-2xl font-bold mb-4">Erreur de chargement</h1>
-          <p className="text-muted-foreground">Impossible de charger les données de la page d'accueil.</p>
+          <p className="text-muted-foreground">Impossible de charger les données de la page d&apos;accueil.</p>
         </div>
       </div>
     )
   }
 
   return (
-    <div>
+    <div className="overflow-x-hidden">
       {/* Hero Section */}
-      <section 
-        className="py-12 px-4 sm:py-16 md:py-20 lg:py-24"
-        style={{ 
-          backgroundColor: accueil.couleur_fond_section_principale || 'var(--primary)',
-          color: accueil.couleur_texte_section_principale || 'white'
-        }}
-      >
+      <section className={`py-12 px-4 sm:py-16 md:py-20 lg:py-24 ${themeClasses.sectionPrimaire}`}>
         <div className="max-w-7xl mx-auto">
           <div className="text-center max-w-4xl mx-auto">
             {/* Logo au-dessus du titre */}
@@ -72,30 +67,21 @@ export default function Home() {
               </div>
             )}
             
-            <h1 
-              className={`${themeClasses.titre} mb-4 sm:mb-6`}
-              style={{ color: accueil.titre_principal_couleur || 'inherit' }}
-            >
+            <h1 className={`${themeClasses.titre} mb-4 sm:mb-6`}>
               {accueil.titre_principal || "Bienvenue sur notre site"}
             </h1>
-            <p 
-              className={`${themeClasses.sousTitre} mb-6 sm:mb-8`}
-              style={{ color: accueil.couleur_texte_section_principale || 'inherit' }}
-            >
-              {accueil.sous_titre_principal || "Découvrez nos services et actualités"}
-            </p>
+            <div className={`${themeClasses.sousTitre} mb-6 sm:mb-8`}>
+              <RichContent 
+                content={accueil.contenu_principal || "Découvrez nos services et actualités"}
+                className={themeClasses.sousTitre}
+              />
+            </div>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button 
                 size="lg" 
                 className="w-full sm:w-auto text-base sm:text-lg py-3 sm:py-4 px-6 sm:px-8"
                 variant="secondary"
-                style={{
-                  ...getButtonStyles(boutons?.[0]),
-                  ...(accueil.couleur_texte_section_principale && !boutons?.[0] && {
-                    borderColor: accueil.couleur_texte_section_principale,
-                    color: accueil.couleur_texte_section_principale
-                  })
-                }}
+                style={getButtonStyles(boutons?.[0])}
                 {...getButtonHoverHandlers(boutons?.[0])}
               >
                 Découvrir nos services
@@ -105,11 +91,7 @@ export default function Home() {
                 size="lg" 
                 className="w-full sm:w-auto text-base sm:text-lg py-3 sm:py-4 px-6 sm:px-8"
                 variant="outline"
-                style={{ 
-                  ...getButtonStyles(boutons?.[0]),
-                  borderColor: boutons?.[0]?.couleur_bordure || accueil.couleur_texte_section_principale || 'white',
-                  color: boutons?.[0]?.couleur_texte || accueil.couleur_texte_section_principale || 'white'
-                }}
+                style={getButtonStyles(boutons?.[0])}
                 {...getButtonHoverHandlers(boutons?.[0])}
               >
                 Nous contacter
@@ -117,38 +99,32 @@ export default function Home() {
               </Button>
             </div>
           </div>
+          
+          {/* Chiffres clés intégrés dans la section hero */}
+          <ChiffresCles />
         </div>
       </section>
 
       {/* Projets Section */}
-      <section 
-        className="py-12 px-4 sm:py-16 md:py-20"
-        style={{ 
-          backgroundColor: accueil.couleur_fond_section_projets || 'var(--secondary)',
-          color: accueil.couleur_texte_section_projets || 'inherit'
-        }}
-      >
+      <section className={`py-12 px-4 sm:py-16 md:py-20 ${themeClasses.sectionSecondaire}`}>
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-8 sm:mb-12">
-            <h2 
-              className={`${themeClasses.titre} mb-4`}
-              style={{ color: accueil.titre_projets_couleur || 'inherit' }}
-            >
+            <h2 className={`${themeClasses.titre} mb-4`}>
               {accueil.titre_projets || "Nos Projets"}
             </h2>
-            <p 
-              className={`${themeClasses.sousTitre} max-w-3xl mx-auto`}
-              style={{ color: accueil.couleur_texte_section_projets || 'inherit' }}
-            >
-              {accueil.sous_titre_projets || "Découvrez nos projets et initiatives"}
-            </p>
+            <div className={`${themeClasses.sousTitre} max-w-3xl mx-auto`}>
+              <RichContent 
+                content={accueil.contenu_projets || "Découvrez nos projets et initiatives"}
+                className={themeClasses.sousTitre}
+              />
+            </div>
           </div>
           
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {projets?.map((projet) => (
               <Card 
                 key={projet.id} 
-                className="hover:shadow-lg transition-shadow h-full"
+                className={`hover:shadow-lg transition-shadow h-full ${themeClasses.cardBordered}`}
                 style={{ 
                   backgroundColor: projet.couleur || 'white',
                   color: projet.couleur_texte || 'inherit'
@@ -169,9 +145,12 @@ export default function Home() {
                   <CardTitle className={themeClasses.corps}>{projet.titre}</CardTitle>
                 </CardHeader>
                 <CardContent className="text-center">
-                  <CardDescription className={themeClasses.corps}>
-                    {projet.description}
-                  </CardDescription>
+                  <div className={themeClasses.corps}>
+                    <RichContent 
+                      content={projet.description}
+                      className={themeClasses.corps}
+                    />
+                  </div>
                 </CardContent>
               </Card>
             ))}
@@ -180,37 +159,28 @@ export default function Home() {
       </section>
 
       {/* Articles Section */}
-      <section 
-        className="py-12 px-4 sm:py-16 md:py-20"
-        style={{ 
-          backgroundColor: accueil.couleur_fond_section_actualites || 'white',
-          color: accueil.couleur_texte_section_actualites || 'inherit'
-        }}
-      >
+      <section className={`py-12 px-4 sm:py-16 md:py-20 ${themeClasses.sectionPrimaire}`}>
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-8 sm:mb-12">
-            <h2 
-              className={`${themeClasses.titre} mb-4`}
-              style={{ color: accueil.titre_actualites_couleur || 'inherit' }}
-            >
+            <h2 className={`${themeClasses.titre} mb-4`}>
               {accueil.titre_actualites || "Actualités"}
             </h2>
-            <p 
-              className={`${themeClasses.sousTitre} max-w-3xl mx-auto`}
-              style={{ color: accueil.couleur_texte_section_actualites || 'inherit' }}
-            >
-              {accueil.sous_titre_actualites || "Restez informé de nos dernières actualités"}
-            </p>
-          </div>
-          
+            <div className={`${themeClasses.sousTitre} max-w-3xl mx-auto`}>
+              <RichContent 
+                content={accueil.contenu_actualites || "Restez informé de nos dernières actualités"}
+                className={themeClasses.sousTitre}
+              />
+            </div>
+        </div>
+
           {/* Scroll horizontal natif pour mobile, grid pour desktop */}
-          <div className="block sm:hidden">
-            <div className="overflow-x-auto scrollbar-hide pb-4">
-              <div className="flex gap-4 w-max">
-                {accueil.articles_a_la_une?.slice(0, 3).map((article) => (
-                  <div key={article.id} className="flex-shrink-0 w-80">
+          <div className={`block sm:hidden ${themeClasses.articlesContainer}`}>
+            <div className={`pb-4 ${(accueil.articles_a_la_une?.length || 0) > 1 ? 'overflow-x-auto scrollbar-hide' : ''}`}>
+              <div className="flex gap-4" style={{ width: 'max-content' }}>
+                {accueil.articles_a_la_une?.map((article) => (
+                  <div key={article.id} className="flex-shrink-0 w-72 sm:w-80">
                     <Card 
-                      className="hover:shadow-lg transition-shadow h-full"
+                      className={`hover:shadow-lg transition-shadow h-full ${themeClasses.cardBordered}`}
                       style={{ 
                         backgroundColor: article.couleur_de_fond || 'white',
                         color: article.couleur_texte || 'inherit'
@@ -227,7 +197,7 @@ export default function Home() {
                           />
                         </div>
                       )}
-                      <CardHeader>
+            <CardHeader>
                         <div className="flex flex-wrap gap-2 mb-2">
                           {article.etiquettes?.map((etiquette) => (
                             <Badge key={etiquette.id} variant="secondary" className="text-xs">
@@ -238,16 +208,16 @@ export default function Home() {
                         <CardTitle className={`${themeClasses.corps} line-clamp-2`}>
                           {article.titre}
                         </CardTitle>
-                      </CardHeader>
-                      <CardContent>
+            </CardHeader>
+            <CardContent>
                         <CardDescription className={`${themeClasses.corps} line-clamp-3`}>
                           {article.resume || (article.contenu ? article.contenu.replace(/<[^>]*>/g, '').substring(0, 150) + '...' : '')}
-                        </CardDescription>
+              </CardDescription>
                         <div className={`mt-4 ${themeClasses.indication} text-muted-foreground`}>
                           {new Date(article.date_created).toLocaleDateString('fr-FR')}
                         </div>
-                      </CardContent>
-                    </Card>
+            </CardContent>
+          </Card>
                   </div>
                 ))}
               </div>
@@ -255,11 +225,11 @@ export default function Home() {
           </div>
           
           {/* Grid pour tablette et desktop */}
-          <div className="hidden sm:grid grid-cols-2 lg:grid-cols-3 gap-6">
-            {accueil.articles_a_la_une?.slice(0, 3).map((article) => (
+          <div className={`hidden sm:grid grid-cols-2 lg:grid-cols-3 gap-6 ${themeClasses.articlesContainer}`}>
+            {accueil.articles_a_la_une?.map((article) => (
               <Card 
                 key={article.id} 
-                className="hover:shadow-lg transition-shadow h-full"
+                className={`hover:shadow-lg transition-shadow h-full ${themeClasses.cardBordered}`}
                 style={{ 
                   backgroundColor: article.couleur_de_fond || 'white',
                   color: article.couleur_texte || 'inherit'
@@ -276,7 +246,7 @@ export default function Home() {
                     />
                   </div>
                 )}
-                <CardHeader>
+            <CardHeader>
                   <div className="flex flex-wrap gap-2 mb-2">
                     {article.etiquettes?.map((etiquette) => (
                       <Badge key={etiquette.id} variant="secondary" className="text-xs">
@@ -287,16 +257,16 @@ export default function Home() {
                   <CardTitle className={`${themeClasses.corps} line-clamp-2`}>
                     {article.titre}
                   </CardTitle>
-                </CardHeader>
-                <CardContent>
+            </CardHeader>
+            <CardContent>
                   <CardDescription className={`${themeClasses.corps} line-clamp-3`}>
                     {article.resume || (article.contenu ? article.contenu.replace(/<[^>]*>/g, '').substring(0, 150) + '...' : '')}
-                  </CardDescription>
+              </CardDescription>
                   <div className={`mt-4 ${themeClasses.indication} text-muted-foreground`}>
                     {new Date(article.date_created).toLocaleDateString('fr-FR')}
                   </div>
-                </CardContent>
-              </Card>
+            </CardContent>
+          </Card>
             ))}
           </div>
           
@@ -315,38 +285,29 @@ export default function Home() {
       </section>
 
       {/* Événements Section */}
-      <section 
-        className="py-12 px-4 sm:py-16 md:py-20"
-        style={{ 
-          backgroundColor: accueil.couleur_fond_section_evenements || 'var(--tertiary)',
-          color: accueil.couleur_texte_section_evenements || 'white'
-        }}
-      >
+      <section className={`py-12 px-4 sm:py-16 md:py-20 ${themeClasses.sectionSecondaire}`}>
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-8 sm:mb-12">
-            <h2 
-              className={`${themeClasses.titre} mb-4`}
-              style={{ color: accueil.titre_evenements_couleur || 'inherit' }}
-            >
+            <h2 className={`${themeClasses.titre} mb-4`}>
               {accueil.titre_evenements || "Prochains Événements"}
             </h2>
-            <p 
-              className={`${themeClasses.sousTitre} max-w-3xl mx-auto`}
-              style={{ color: accueil.couleur_texte_section_evenements || 'inherit' }}
-            >
-              {accueil.sous_titre_evenements || "Découvrez nos prochains événements et formations"}
-            </p>
+            <div className={`${themeClasses.sousTitre} max-w-3xl mx-auto`}>
+              <RichContent 
+                content={accueil.contenu_evenements || "Découvrez nos prochains événements et formations"}
+                className={themeClasses.sousTitre}
+              />
+            </div>
           </div>
           
           {/* Scroll horizontal natif pour mobile, grid pour desktop */}
-          <div className="block sm:hidden">
-            <div className="overflow-x-auto scrollbar-hide pb-4">
-              <div className="flex gap-4 w-max">
-                {evenements?.slice(0, 3).map((evenement) => (
-                  <div key={evenement.id} className="flex-shrink-0 w-80">
+          <div className={`block sm:hidden ${themeClasses.evenementsContainer}`}>
+            <div className={`pb-4 ${(accueil.evenements_a_la_une?.length || 0) > 1 ? 'overflow-x-auto scrollbar-hide' : ''}`}>
+              <div className="flex gap-4" style={{ width: 'max-content' }}>
+                {accueil.evenements_a_la_une?.map((evenement) => (
+                  <div key={evenement.id} className="flex-shrink-0 w-72 sm:w-80">
                     <Card 
-                      className="hover:shadow-lg transition-shadow h-full"
-                      style={{ 
+                      className={`hover:shadow-lg transition-shadow h-full ${themeClasses.cardBordered}`}
+                      style={{
                         backgroundColor: evenement.couleur_de_fond || 'white',
                         color: evenement.couleur_texte || 'inherit'
                       }}
@@ -362,7 +323,7 @@ export default function Home() {
                           />
                         </div>
                       )}
-                      <CardHeader>
+            <CardHeader>
                         <div className="flex flex-wrap gap-2 mb-2">
                           {evenement.etiquettes?.map((etiquette) => (
                             <Badge key={etiquette.id} variant="secondary" className="text-xs">
@@ -373,11 +334,11 @@ export default function Home() {
                         <CardTitle className={`${themeClasses.corps} line-clamp-2`}>
                           {evenement.titre}
                         </CardTitle>
-                      </CardHeader>
-                      <CardContent>
+            </CardHeader>
+            <CardContent>
                         <CardDescription className={`${themeClasses.corps} line-clamp-3 mb-4`}>
                           {evenement.resume}
-                        </CardDescription>
+              </CardDescription>
                         
                         <div className={`space-y-2 ${themeClasses.indication}`}>
                           <div className="flex items-center gap-2">
@@ -408,8 +369,8 @@ export default function Home() {
                         >
                           Voir les détails
                         </Button>
-                      </CardContent>
-                    </Card>
+            </CardContent>
+          </Card>
                   </div>
                 ))}
               </div>
@@ -417,11 +378,11 @@ export default function Home() {
           </div>
           
           {/* Grid pour tablette et desktop */}
-          <div className="hidden sm:grid grid-cols-2 lg:grid-cols-3 gap-6">
-            {evenements?.slice(0, 3).map((evenement) => (
+          <div className={`hidden sm:grid grid-cols-2 lg:grid-cols-3 gap-6 ${themeClasses.evenementsContainer}`}>
+            {accueil.evenements_a_la_une?.map((evenement) => (
               <Card 
                 key={evenement.id} 
-                className="hover:shadow-lg transition-shadow h-full"
+                className={`hover:shadow-lg transition-shadow h-full ${themeClasses.cardBordered}`}
                 style={{ 
                   backgroundColor: evenement.couleur_de_fond || 'white',
                   color: evenement.couleur_texte || 'inherit'
@@ -438,7 +399,7 @@ export default function Home() {
                     />
                   </div>
                 )}
-                <CardHeader>
+            <CardHeader>
                   <div className="flex flex-wrap gap-2 mb-2">
                     {evenement.etiquettes?.map((etiquette) => (
                       <Badge key={etiquette.id} variant="secondary" className="text-xs">
@@ -449,11 +410,11 @@ export default function Home() {
                   <CardTitle className={`${themeClasses.corps} line-clamp-2`}>
                     {evenement.titre}
                   </CardTitle>
-                </CardHeader>
-                <CardContent>
+            </CardHeader>
+            <CardContent>
                   <CardDescription className={`${themeClasses.corps} line-clamp-3 mb-4`}>
                     {evenement.resume}
-                  </CardDescription>
+              </CardDescription>
                   
                   <div className={`space-y-2 ${themeClasses.indication}`}>
                     <div className="flex items-center gap-2">
@@ -484,21 +445,17 @@ export default function Home() {
                   >
                     Voir les détails
                   </Button>
-                </CardContent>
-              </Card>
+            </CardContent>
+          </Card>
             ))}
-          </div>
-          
+        </div>
+
           <div className="text-center mt-8">
             <Button 
               size="lg" 
               className="text-base sm:text-lg py-3 sm:py-4 px-6 sm:px-8"
               variant="outline"
-              style={{ 
-                ...getButtonStyles(boutons?.[0]),
-                borderColor: boutons?.[0]?.couleur_bordure || accueil.couleur_texte_section_evenements || 'white',
-                color: boutons?.[0]?.couleur_texte || accueil.couleur_texte_section_evenements || 'white'
-              }}
+              style={getButtonStyles(boutons?.[0])}
               {...getButtonHoverHandlers(boutons?.[0])}
             >
               Voir tous les événements
@@ -509,39 +466,24 @@ export default function Home() {
       </section>
 
       {/* CTA Section */}
-      <section 
-        className="py-12 px-4 sm:py-16 md:py-20"
-        style={{ 
-          backgroundColor: accueil.couleur_fond_section_information || 'var(--primary)',
-          color: accueil.couleur_texte_section_information || 'white'
-        }}
-      >
+      <section className={`py-12 px-4 sm:py-16 md:py-20 ${themeClasses.sectionPrimaire}`}>
         <div className="max-w-7xl mx-auto">
           <div className="text-center max-w-4xl mx-auto">
-            <h2 
-              className={`${themeClasses.titre} mb-4`}
-              style={{ color: accueil.titre_informations_couleur || 'inherit' }}
-            >
+            <h2 className={`${themeClasses.titre} mb-4`}>
               {accueil.titre_informations || "Besoin d'aide ou d'informations ?"}
             </h2>
-            <p 
-              className={`${themeClasses.sousTitre} mb-6 sm:mb-8`}
-              style={{ color: accueil.couleur_texte_section_information || 'inherit' }}
-            >
-              {accueil.sous_titre_informations || "Notre équipe est là pour vous accompagner"}
-            </p>
+            <div className={`${themeClasses.sousTitre} mb-6 sm:mb-8`}>
+              <RichContent 
+                content={accueil.contenu_informations || "Notre équipe est là pour vous accompagner"}
+                className={themeClasses.sousTitre}
+              />
+            </div>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button 
                 size="lg" 
                 className="w-full sm:w-auto text-base sm:text-lg py-3 sm:py-4 px-6 sm:px-8"
                 variant="secondary"
-                style={{
-                  ...getButtonStyles(boutons?.[0]),
-                  ...(accueil.couleur_texte_section_information && !boutons?.[0] && {
-                    borderColor: accueil.couleur_texte_section_information,
-                    color: accueil.couleur_texte_section_information
-                  })
-                }}
+                style={getButtonStyles(boutons?.[0])}
                 {...getButtonHoverHandlers(boutons?.[0])}
               >
                 Nous contacter
@@ -551,11 +493,7 @@ export default function Home() {
                 size="lg" 
                 className="w-full sm:w-auto text-base sm:text-lg py-3 sm:py-4 px-6 sm:px-8"
                 variant="outline"
-                style={{ 
-                  ...getButtonStyles(boutons?.[0]),
-                  borderColor: boutons?.[0]?.couleur_bordure || accueil.couleur_texte_section_information || 'white',
-                  color: boutons?.[0]?.couleur_texte || accueil.couleur_texte_section_information || 'white'
-                }}
+                style={getButtonStyles(boutons?.[0])}
                 {...getButtonHoverHandlers(boutons?.[0])}
               >
                 En savoir plus
@@ -568,37 +506,28 @@ export default function Home() {
 
       {/* Partenaires Section */}
       {partenaires && (
-        <section 
-          className="py-12 px-4 sm:py-16 md:py-20 lg:py-24"
-          style={{
-            backgroundColor: accueil.couleur_fond_section_partenaires || 'var(--secondary)',
-            color: accueil.couleur_texte_section_partenaires || 'var(--primary)'
-          }}
-        >
+        <section className={`py-12 px-4 sm:py-16 md:py-20 lg:py-24 ${themeClasses.sectionSecondaire}`}>
           <div className="max-w-7xl mx-auto">
             <div className="text-center mb-8 sm:mb-12">
-              <h2 
-                className={`${themeClasses.titre} mb-4`}
-                style={{ color: accueil.titre_partenaires_couleur || 'inherit' }}
-              >
+              <h2 className={`${themeClasses.titre} mb-4`}>
                 {accueil.titre_partenaires || "Nos Partenaires"}
               </h2>
-              <p 
-                className={`${themeClasses.sousTitre} max-w-2xl mx-auto`}
-                style={{ color: accueil.couleur_texte_section_partenaires || 'inherit' }}
-              >
-                {accueil.sous_titre_partenaires || "Découvrez nos partenaires qui nous accompagnent dans notre mission"}
-              </p>
+              <div className={`${themeClasses.sousTitre} max-w-2xl mx-auto`}>
+                <RichContent 
+                  content={accueil.contenu_partenaires || "Découvrez nos partenaires qui nous accompagnent dans notre mission"}
+                  className={themeClasses.sousTitre}
+                />
+              </div>
             </div>
             
             {/* Scroll horizontal natif pour mobile, grid pour desktop */}
-            <div className="block sm:hidden">
+            <div className={`block sm:hidden ${themeClasses.partenairesContainer}`}>
               <div className="overflow-x-auto scrollbar-hide pb-4">
                 <div className="flex space-x-4" style={{ width: 'max-content' }}>
                   {partenaires.map((partenaire) => (
-                    <div key={partenaire.id} className="flex-shrink-0" style={{ width: '280px' }}>
+                    <div key={partenaire.id} className="flex-shrink-0 w-72 sm:w-80">
                       <Card 
-                        className="group hover:shadow-lg transition-all duration-300 border-2 hover:border-primary/20 cursor-pointer h-full"
+                        className={`group hover:shadow-lg transition-all duration-300 cursor-pointer h-full ${themeClasses.cardBordered}`}
                         onClick={() => {
                           if (partenaire.redirection) {
                             window.open(partenaire.redirection, '_blank', 'noopener,noreferrer')
@@ -646,11 +575,11 @@ export default function Home() {
             </div>
 
             {/* Grid pour desktop */}
-            <div className="hidden sm:grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className={`hidden sm:grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 ${themeClasses.partenairesContainer}`}>
               {partenaires.map((partenaire) => (
                 <Card 
                   key={partenaire.id} 
-                  className="group hover:shadow-lg transition-all duration-300 border-2 hover:border-primary/20 cursor-pointer h-full"
+                  className={`group hover:shadow-lg transition-all duration-300 cursor-pointer h-full ${themeClasses.cardBordered}`}
                   onClick={() => {
                     if (partenaire.redirection) {
                       window.open(partenaire.redirection, '_blank', 'noopener,noreferrer')

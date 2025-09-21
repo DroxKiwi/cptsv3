@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { directusClient, type Article, type Tag, type ReglagesGeneraux, type Accueil, type Logo, type Entete, type Projet, type Mission, type Evenement, type Bouton, type Partenaire, type PiedDePage, type ReseauSocial } from '@/lib/directus'
+import { directusClient, type Article, type Tag, type ReglagesGeneraux, type Accueil, type Logo, type Entete, type Projet, type Mission, type Evenement, type Bouton, type Partenaire, type PiedDePage, type ReseauSocial, type ChiffresCles } from '@/lib/directus'
 
 // Hook pour les articles
 export function useArticles() {
@@ -488,3 +488,29 @@ export function useReseauSocial(id: number) {
 
   return { reseauSocial, loading, error }
 }
+
+// Hook pour les chiffres clés
+export function useChiffresCles() {
+  const [chiffresCles, setChiffresCles] = useState<ChiffresCles[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+
+  useEffect(() => {
+    const fetchChiffresCles = async () => {
+      try {
+        setLoading(true)
+        const data = await directusClient.getChiffresCles()
+        setChiffresCles(data as ChiffresCles[])
+      } catch (err) {
+        setError(err instanceof Error ? err.message : 'Erreur lors du chargement des chiffres clés')
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchChiffresCles()
+  }, [])
+
+  return { chiffresCles, loading, error }
+}
+

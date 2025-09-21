@@ -14,51 +14,62 @@ const defaultTheme = {
   epaisseur_sous_titre: '600',
   epaisseur_corps: '400',
   epaisseur_indication: '500',
+  couleur_titre: '#1f2937',
+  couleur_sous_titre: '#4b5563',
+  couleur_corps: '#374151',
+  couleur_indication: '#6b7280',
+  couleur_primaire: '#f8fafc',      // Fond clair (blanc cassé)
+  couleur_secondaire: '#f1f5f9',    // Fond alternatif (gris très clair)
+  couleur_tertiaire: '#e2e8f0',     // Bordures (gris clair)
+  epaisseur_bordures: '1px',        // Épaisseur des bordures (déjà avec px)
+  couleur_ombrage: '#000000',       // Couleur de l'ombre (noir)
+  epaisseur_ombrage: '4px',         // Épaisseur de l'ombre (déjà avec px)
+  ombrage: true,                     // Activer les ombres
 }
 
-// Polices système disponibles
-const systemFonts = [
-  'Arial, sans-serif',
-  'Helvetica, sans-serif',
-  'Times New Roman, serif',
-  'Courier New, monospace',
-  'Verdana, sans-serif',
-  'Georgia, serif',
-  'Palatino, serif',
-  'Garamond, serif',
-  'Bookman, serif',
-  'Comic Sans MS, cursive',
-  'Trebuchet MS, sans-serif',
-  'Arial Black, sans-serif',
-  'Impact, fantasy',
-  'Papyrus, fantasy',
-  'Brush Script MT, cursive',
-  'Inter, sans-serif',
-  'Roboto, sans-serif',
-  'Open Sans, sans-serif',
-  'Lato, sans-serif',
-  'Montserrat, sans-serif',
-  'Poppins, sans-serif',
-  'Source Sans Pro, sans-serif',
-  'Nunito, sans-serif',
-  'Ubuntu, sans-serif',
-  'Playfair Display, serif',
-  'Merriweather, serif',
-  'Crimson Text, serif',
-  'Lora, serif',
-  'PT Serif, serif',
-  'Source Serif Pro, serif',
-  'Fira Code, monospace',
-  'JetBrains Mono, monospace',
-  'Source Code Pro, monospace',
-  'Consolas, monospace',
-  'Monaco, monospace',
-  'Cooper Black, serif',
-  'Menlo, monospace'
-]
+// Polices système disponibles (pour référence future)
+// const systemFonts = [
+//   'Arial, sans-serif',
+//   'Helvetica, sans-serif',
+//   'Times New Roman, serif',
+//   'Courier New, monospace',
+//   'Verdana, sans-serif',
+//   'Georgia, serif',
+//   'Palatino, serif',
+//   'Garamond, serif',
+//   'Bookman, serif',
+//   'Comic Sans MS, cursive',
+//   'Trebuchet MS, sans-serif',
+//   'Arial Black, sans-serif',
+//   'Impact, fantasy',
+//   'Papyrus, fantasy',
+//   'Brush Script MT, cursive',
+//   'Inter, sans-serif',
+//   'Roboto, sans-serif',
+//   'Open Sans, sans-serif',
+//   'Lato, sans-serif',
+//   'Montserrat, sans-serif',
+//   'Poppins, sans-serif',
+//   'Source Sans Pro, sans-serif',
+//   'Nunito, sans-serif',
+//   'Ubuntu, sans-serif',
+//   'Playfair Display, serif',
+//   'Merriweather, serif',
+//   'Crimson Text, serif',
+//   'Lora, serif',
+//   'PT Serif, serif',
+//   'Source Serif Pro, serif',
+//   'Fira Code, monospace',
+//   'JetBrains Mono, monospace',
+//   'Source Code Pro, monospace',
+//   'Consolas, monospace',
+//   'Monaco, monospace',
+//   'Cooper Black, serif',
+//   'Menlo, monospace'
+// ]
 
 // Fonction pour convertir les tailles en responsive
-function convertToResponsiveSize(value: string | number, maxMobile: number, maxTablet: number): string {
+function convertToResponsiveSize(value: string | number, maxMobile: number): string {
   const numValue = typeof value === 'string' ? parseFloat(value) : value
   
   // Si c'est déjà une valeur avec unité, on la garde
@@ -68,7 +79,6 @@ function convertToResponsiveSize(value: string | number, maxMobile: number, maxT
   
   // Conversion responsive simple
   const mobileSize = Math.min(numValue, maxMobile)
-  const tabletSize = Math.min(numValue, maxTablet)
   const desktopSize = numValue
   
   // Utilise clamp simple et efficace
@@ -90,6 +100,25 @@ export function generateThemeCSS(reglages: ReglagesGeneraux | null): string {
     epaisseur_sous_titre: reglages?.epaisseur_sous_titre || defaultTheme.epaisseur_sous_titre,
     epaisseur_corps: reglages?.epaisseur_corps || defaultTheme.epaisseur_corps,
     epaisseur_indication: reglages?.epaisseur_indication || defaultTheme.epaisseur_indication,
+    couleur_titre: reglages?.couleur_titre || defaultTheme.couleur_titre,
+    couleur_sous_titre: reglages?.couleur_sous_titre || defaultTheme.couleur_sous_titre,
+    couleur_corps: reglages?.couleur_corps || defaultTheme.couleur_corps,
+    couleur_indication: reglages?.couleur_indication || defaultTheme.couleur_indication,
+    couleur_primaire: reglages?.couleur_primaire || defaultTheme.couleur_primaire,
+    couleur_secondaire: reglages?.couleur_secondaire || defaultTheme.couleur_secondaire,
+    couleur_tertiaire: reglages?.couleur_tertiaire || defaultTheme.couleur_tertiaire,
+    epaisseur_bordures: reglages?.epaisseur_bordures ? 
+      (typeof reglages.epaisseur_bordures === 'string' && reglages.epaisseur_bordures.includes('px') ? 
+        reglages.epaisseur_bordures : 
+        `${reglages.epaisseur_bordures}px`) 
+      : defaultTheme.epaisseur_bordures,
+    couleur_ombrage: reglages?.couleur_ombrage || defaultTheme.couleur_ombrage,
+    epaisseur_ombrage: reglages?.epaisseur_ombrage ? 
+      (typeof reglages.epaisseur_ombrage === 'string' && reglages.epaisseur_ombrage.includes('px') ? 
+        reglages.epaisseur_ombrage : 
+        `${reglages.epaisseur_ombrage}px`) 
+      : defaultTheme.epaisseur_ombrage,
+    ombrage: reglages?.ombrage !== undefined ? reglages.ombrage : defaultTheme.ombrage,
   }
 
   return `
@@ -102,16 +131,35 @@ export function generateThemeCSS(reglages: ReglagesGeneraux | null): string {
       --font-indication: ${theme.polices_ecriture_indication};
       
       /* Tailles responsive */
-      --taille-titre: ${convertToResponsiveSize(theme.taille_polices_titre, 48, 72)};
-      --taille-sous-titre: ${convertToResponsiveSize(theme.taille_polices_sous_titre, 24, 32)};
-      --taille-corps: ${convertToResponsiveSize(theme.taille_polices_corps, 14, 16)};
-      --taille-indication: ${convertToResponsiveSize(theme.taille_polices_indication, 12, 14)};
+      --taille-titre: ${convertToResponsiveSize(theme.taille_polices_titre, 48)};
+      --taille-sous-titre: ${convertToResponsiveSize(theme.taille_polices_sous_titre, 24)};
+      --taille-corps: ${convertToResponsiveSize(theme.taille_polices_corps, 14)};
+      --taille-indication: ${convertToResponsiveSize(theme.taille_polices_indication, 12)};
       
       /* Épaisseurs */
       --epaisseur-titre: ${theme.epaisseur_titre};
       --epaisseur-sous-titre: ${theme.epaisseur_sous_titre};
       --epaisseur-corps: ${theme.epaisseur_corps};
       --epaisseur-indication: ${theme.epaisseur_indication};
+      
+      /* Couleurs de texte */
+      --couleur-titre: ${theme.couleur_titre};
+      --couleur-sous-titre: ${theme.couleur_sous_titre};
+      --couleur-corps: ${theme.couleur_corps};
+      --couleur-indication: ${theme.couleur_indication};
+      
+      /* Couleurs primaires */
+      --couleur-primaire: ${theme.couleur_primaire};
+      --couleur-secondaire: ${theme.couleur_secondaire};
+      --couleur-tertiaire: ${theme.couleur_tertiaire};
+      
+      /* Épaisseur des bordures */
+      --epaisseur-bordures: ${theme.epaisseur_bordures};
+      
+      /* Ombres */
+      --couleur-ombrage: ${theme.couleur_ombrage};
+      --epaisseur-ombrage: ${theme.epaisseur_ombrage};
+      --ombrage-actif: ${theme.ombrage ? '1' : '0'};
     }
     
     /* Media queries pour forcer les tailles sur mobile */
@@ -138,24 +186,28 @@ export function generateThemeCSS(reglages: ReglagesGeneraux | null): string {
       font-family: var(--font-titre) !important;
       font-size: var(--taille-titre) !important;
       font-weight: var(--epaisseur-titre) !important;
+      color: var(--couleur-titre) !important;
     }
     
     .font-sous-titre-custom {
       font-family: var(--font-sous-titre) !important;
       font-size: var(--taille-sous-titre) !important;
       font-weight: var(--epaisseur-sous-titre) !important;
+      color: var(--couleur-sous-titre) !important;
     }
     
     .font-corps-custom {
       font-family: var(--font-corps) !important;
       font-size: var(--taille-corps) !important;
       font-weight: var(--epaisseur-corps) !important;
+      color: var(--couleur-corps) !important;
     }
     
     .font-indication-custom {
       font-family: var(--font-indication) !important;
       font-size: var(--taille-indication) !important;
       font-weight: var(--epaisseur-indication) !important;
+      color: var(--couleur-indication) !important;
     }
     
     /* Classes pour les nouvelles couleurs */
@@ -173,13 +225,121 @@ export function generateThemeCSS(reglages: ReglagesGeneraux | null): string {
     .border-quaternary { border-color: var(--quaternary) !important; }
     .border-quinary { border-color: var(--quinary) !important; }
     .border-senary { border-color: var(--senary) !important; }
+    
+    /* Classes pour les couleurs de texte */
+    .text-titre-custom { color: var(--couleur-titre) !important; }
+    .text-sous-titre-custom { color: var(--couleur-sous-titre) !important; }
+    .text-corps-custom { color: var(--couleur-corps) !important; }
+    .text-indication-custom { color: var(--couleur-indication) !important; }
+    
+    /* Classes pour les couleurs primaires */
+    .bg-primaire { background-color: var(--couleur-primaire) !important; }
+    .bg-secondaire { background-color: var(--couleur-secondaire) !important; }
+    .bg-tertiaire { background-color: var(--couleur-tertiaire) !important; }
+    
+    .text-primaire { color: var(--couleur-primaire) !important; }
+    .text-secondaire { color: var(--couleur-secondaire) !important; }
+    .text-tertiaire { color: var(--couleur-tertiaire) !important; }
+    
+    .border-primaire { border-color: var(--couleur-primaire) !important; }
+    .border-secondaire { border-color: var(--couleur-secondaire) !important; }
+    .border-tertiaire { border-color: var(--couleur-tertiaire) !important; }
+    
+    /* Classes pour les sections alternées */
+    .section-primaire { 
+      background-color: var(--couleur-primaire) !important; 
+    }
+    .section-secondaire { 
+      background-color: var(--couleur-secondaire) !important; 
+    }
+    
+    /* Padding dynamique pour les sections avec ombres */
+    .ombrage-actif .section-primaire,
+    .ombrage-actif .section-secondaire {
+      padding-left: calc(16px + var(--epaisseur-ombrage)) !important;
+      padding-right: calc(16px + var(--epaisseur-ombrage)) !important;
+    }
+    
+    /* Classes pour les composants avec bordures */
+    .component-bordered {
+      border: var(--epaisseur-bordures) solid var(--couleur-tertiaire) !important;
+      border-radius: 8px !important;
+    }
+    
+    .card-bordered {
+      border: var(--epaisseur-bordures) solid var(--couleur-tertiaire) !important;
+      border-radius: 12px !important;
+    }
+    
+    /* Ombres conditionnelles */
+    .ombrage-actif .component-bordered {
+      box-shadow: 0 1px var(--epaisseur-ombrage) 0 var(--couleur-ombrage) !important;
+    }
+    
+    .ombrage-actif .card-bordered {
+      box-shadow: 0 2px var(--epaisseur-ombrage) 0 var(--couleur-ombrage) !important;
+    }
+    
+    .ombrage-actif button {
+      box-shadow: 0 2px var(--epaisseur-ombrage) 0 var(--couleur-ombrage) !important;
+    }
+    
+    /* Les ombres pour articles et événements sont déjà gérées par .card-bordered */
+    
+    /* Conteneurs pour éviter la coupure des ombres */
+    .articles-container,
+    .evenements-container,
+    .partenaires-container {
+      padding: var(--epaisseur-ombrage) !important;
+      margin: calc(-1 * var(--epaisseur-ombrage)) !important;
+    }
+    
+    /* Padding dynamique basé sur l'épaisseur de l'ombre */
+    .ombrage-actif .articles-container,
+    .ombrage-actif .evenements-container,
+    .ombrage-actif .partenaires-container {
+      padding: calc(var(--epaisseur-ombrage) + 8px) !important;
+      margin: calc(-1 * (var(--epaisseur-ombrage) + 8px)) !important;
+    }
+    
+    /* Padding fixe en haut des cartes */
+    .ombrage-actif .articles-container,
+    .ombrage-actif .evenements-container,
+    .ombrage-actif .partenaires-container {
+      padding-top: 50px !important;
+    }
+    
+    /* Padding supplémentaire pour les conteneurs de scroll horizontal */
+    .ombrage-actif .articles-container .overflow-x-auto,
+    .ombrage-actif .evenements-container .overflow-x-auto,
+    .ombrage-actif .partenaires-container .overflow-x-auto {
+      padding-left: var(--epaisseur-ombrage) !important;
+      padding-right: var(--epaisseur-ombrage) !important;
+      padding-top: 50px !important;
+    }
+    
+    /* Padding pour les conteneurs de scroll horizontal même sans classe overflow-x-auto */
+    .ombrage-actif .articles-container > div,
+    .ombrage-actif .evenements-container > div,
+    .ombrage-actif .partenaires-container > div {
+      padding-top: 50px !important;
+    }
+    
+    /* Padding dynamique pour les grilles de cartes */
+    .ombrage-actif .grid {
+      gap: calc(24px + var(--epaisseur-ombrage)) !important;
+    }
+    
+    /* Padding dynamique pour les conteneurs flex */
+    .ombrage-actif .flex {
+      gap: calc(16px + var(--epaisseur-ombrage)) !important;
+    }
   `
 }
 
 // Fonction pour obtenir la couleur de texte avec priorité
 export function getTextColor(
-  customColor: string | undefined, 
-  reglages: ReglagesGeneraux | null
+  customColor: string | undefined
 ): string {
   // 1. Couleur personnalisée (priorité la plus haute)
   if (customColor) {
@@ -196,16 +356,43 @@ export const themeClasses = {
   sousTitre: 'font-sous-titre-custom',
   corps: 'font-corps-custom',
   indication: 'font-indication-custom',
-  // Nouvelles couleurs
-  tertiary: 'bg-tertiary',
+  // Couleurs de texte
+  textTitre: 'text-titre-custom',
+  textSousTitre: 'text-sous-titre-custom',
+  textCorps: 'text-corps-custom',
+  textIndication: 'text-indication-custom',
+  // Couleurs primaires
+  primaire: 'bg-primaire',
+  secondaire: 'bg-secondaire',
+  tertiaire: 'bg-tertiaire',
+  textPrimaire: 'text-primaire',
+  textSecondaire: 'text-secondaire',
+  textTertiaire: 'text-tertiaire',
+  borderPrimaire: 'border-primaire',
+  borderSecondaire: 'border-secondaire',
+  borderTertiaire: 'border-tertiaire',
+  // Classes pour les sections et composants
+  sectionPrimaire: 'section-primaire',
+  sectionSecondaire: 'section-secondaire',
+  componentBordered: 'component-bordered',
+  cardBordered: 'card-bordered',
+  // Épaisseur des bordures
+  epaisseurBordures: 'var(--epaisseur-bordures)',
+  // Ombres
+  couleurOmbrage: 'var(--couleur-ombrage)',
+  epaisseurOmbrage: 'var(--epaisseur-ombrage)',
+  ombrageActif: 'var(--ombrage-actif)',
+  // Classes pour les conteneurs
+  articlesContainer: 'articles-container',
+  evenementsContainer: 'evenements-container',
+  partenairesContainer: 'partenaires-container',
+  // Nouvelles couleurs (legacy)
   quaternary: 'bg-quaternary',
   quinary: 'bg-quinary',
   senary: 'bg-senary',
-  textTertiary: 'text-tertiary',
   textQuaternary: 'text-quaternary',
   textQuinary: 'text-quinary',
   textSenary: 'text-senary',
-  borderTertiary: 'border-tertiary',
   borderQuaternary: 'border-quaternary',
   borderQuinary: 'border-quinary',
   borderSenary: 'border-senary',
