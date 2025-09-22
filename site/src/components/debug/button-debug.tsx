@@ -39,9 +39,9 @@ export function ButtonDebug() {
                   <strong>Couleur fond:</strong> 
                   <div 
                     className="w-8 h-8 rounded border inline-block ml-2"
-                    style={{ backgroundColor: bouton.couleur_fond }}
+                    style={{ backgroundColor: bouton.couleur_de_fond }}
                   ></div>
-                  <span className="ml-2">{bouton.couleur_fond}</span>
+                  <span className="ml-2">{bouton.couleur_de_fond}</span>
                 </div>
                 <div>
                   <strong>Couleur texte:</strong> 

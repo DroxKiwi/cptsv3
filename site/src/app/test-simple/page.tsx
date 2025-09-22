@@ -42,7 +42,7 @@ export default function TestSimplePage() {
                       Test #{index + 1}
                     </Button>
                     <div className="text-xs text-gray-600">
-                      <div>Fond: {bouton.couleur_fond}</div>
+                      <div>Fond: {bouton.couleur_de_fond}</div>
                       <div>Texte: {bouton.couleur_texte}</div>
                       <div>Bordure: {bouton.couleur_bordure || 'Aucune'}</div>
                       <div>Survol: {bouton.survol_type}</div>

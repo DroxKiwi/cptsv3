@@ -42,7 +42,7 @@ export default function Home() {
   }
 
   return (
-    <div className="overflow-x-hidden">
+    <div className="w-full max-w-full overflow-x-hidden" style={{ maxWidth: '100vw', overflowX: 'hidden' }}>
       {/* Hero Section */}
       <section className={`py-12 px-4 sm:py-16 md:py-20 lg:py-24 ${themeClasses.sectionPrimaire}`}>
         <div className="max-w-7xl mx-auto">
@@ -175,8 +175,8 @@ export default function Home() {
 
           {/* Scroll horizontal natif pour mobile, grid pour desktop */}
           <div className={`block sm:hidden ${themeClasses.articlesContainer}`}>
-            <div className={`pb-4 ${(accueil.articles_a_la_une?.length || 0) > 1 ? 'overflow-x-auto scrollbar-hide' : ''}`}>
-              <div className="flex gap-4" style={{ width: 'max-content' }}>
+            <div className={`pb-4 ${(accueil.articles_a_la_une?.length || 0) > 1 ? 'mobile-scroll-container' : ''}`}>
+              <div className="mobile-scroll-content">
                 {accueil.articles_a_la_une?.map((article) => (
                   <div key={article.id} className="flex-shrink-0 w-72 sm:w-80">
                     <Card 
@@ -301,8 +301,8 @@ export default function Home() {
           
           {/* Scroll horizontal natif pour mobile, grid pour desktop */}
           <div className={`block sm:hidden ${themeClasses.evenementsContainer}`}>
-            <div className={`pb-4 ${(accueil.evenements_a_la_une?.length || 0) > 1 ? 'overflow-x-auto scrollbar-hide' : ''}`}>
-              <div className="flex gap-4" style={{ width: 'max-content' }}>
+            <div className={`pb-4 ${(accueil.evenements_a_la_une?.length || 0) > 1 ? 'mobile-scroll-container' : ''}`}>
+              <div className="mobile-scroll-content">
                 {accueil.evenements_a_la_une?.map((evenement) => (
                   <div key={evenement.id} className="flex-shrink-0 w-72 sm:w-80">
                     <Card 
@@ -522,8 +522,8 @@ export default function Home() {
             
             {/* Scroll horizontal natif pour mobile, grid pour desktop */}
             <div className={`block sm:hidden ${themeClasses.partenairesContainer}`}>
-              <div className="overflow-x-auto scrollbar-hide pb-4">
-                <div className="flex space-x-4" style={{ width: 'max-content' }}>
+              <div className="mobile-scroll-container pb-4">
+                <div className="mobile-scroll-content">
                   {partenaires.map((partenaire) => (
                     <div key={partenaire.id} className="flex-shrink-0 w-72 sm:w-80">
                       <Card 

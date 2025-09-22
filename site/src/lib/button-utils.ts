@@ -7,7 +7,7 @@ export function getButtonStyles(bouton: Bouton | null | undefined) {
   }
 
   return {
-    backgroundColor: bouton.couleur_fond || undefined,
+    backgroundColor: bouton.couleur_de_fond || undefined,
     color: bouton.couleur_texte || undefined,
     borderColor: bouton.couleur_bordure || undefined,
     border: bouton.couleur_bordure ? 
@@ -60,7 +60,7 @@ export function getButtonHoverHandlers(bouton: Bouton | null | undefined) {
     onMouseLeave: (e: React.MouseEvent<HTMLButtonElement>) => {
       const target = e.currentTarget
       target.style.transform = 'none'
-      target.style.backgroundColor = bouton.couleur_fond || ''
+      target.style.backgroundColor = bouton.couleur_de_fond || ''
       target.style.opacity = '1'
       target.style.boxShadow = 'none'
     }

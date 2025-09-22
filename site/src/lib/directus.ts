@@ -168,7 +168,7 @@ export interface Bouton {
   user_updated: string | null
   date_updated: string | null
   couleur_texte: string
-  couleur_fond: string
+  couleur_de_fond: string
   couleur_bordure?: string
   epaisseur_bordures?: string
   survol_type: 'agrandissement' | 'changement_de_couleur_de_fond' | 'ombre_portee' | 'changement_opacite' | 'deplacement_vers_le_haut' | 'rotation_legere'

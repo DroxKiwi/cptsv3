@@ -116,8 +116,21 @@
   * {
     @apply border-border outline-ring/50;
   }
+  
+  html {
+    overflow-x: hidden;
+  }
+  
   body {
     @apply bg-background text-foreground;
+    width: 100%;
+    max-width: 100vw;
+  }
+  
+  /* Empêcher le scroll horizontal sur tous les éléments */
+  * {
+    max-width: 100%;
+    box-sizing: border-box;
   }
 }
 
@@ -157,5 +170,253 @@
   
   .scrollbar-hide::-webkit-scrollbar {
     display: none;
+  }
+  
+  /* Correction du scroll horizontal mobile */
+  .mobile-scroll-container {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  
+  .mobile-scroll-container::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .mobile-scroll-content {
+    display: flex;
+    gap: 1rem;
+    width: max-content;
+    min-width: 100%;
+  }
+  
+  /* Empêcher le débordement horizontal */
+  .container {
+    max-width: 100vw;
+    overflow-x: hidden;
+  }
+  
+  /* Fix pour les éléments qui peuvent causer du scroll horizontal */
+  img, video, iframe, canvas, svg {
+    max-width: 100%;
+    height: auto;
+  }
+  
+  /* Fix pour les tableaux */
+  table {
+    width: 100%;
+    table-layout: fixed;
+  }
+  
+  /* Fix pour les éléments avec position absolute */
+  .absolute, .fixed {
+    max-width: 100vw;
+  }
+  
+  /* Fix définitif pour le header sticky - SOLUTION ULTIME */
+  header {
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 9999 !important;
+    width: 100% !important;
+    max-width: 100vw !important;
+  }
+  
+  /* Forcer le sticky même si des éléments fixed interfèrent */
+  body > header {
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 9999 !important;
+  }
+  
+  /* Forcer le sticky sur tous les headers */
+  *[role="banner"], header[class*="header"], header[class*="Header"] {
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 9999 !important;
+  }
+  
+  /* Forcer le sticky avec des sélecteurs plus spécifiques */
+  body > div > header,
+  body > div > div > header,
+  [data-slot="header"],
+  header[ref] {
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 9999 !important;
+  }
+  
+  /* S'assurer qu'aucun élément ne force le header en fixed */
+  header[style*="position: fixed"],
+  header[style*="position:fixed"] {
+    position: sticky !important;
+  }
+  
+  /* Forcer le sticky avec des sélecteurs encore plus spécifiques */
+  html body header,
+  body > div > div > header,
+  body > div > div > div > header {
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 9999 !important;
+  }
+  
+  /* Override de tous les fixed possibles */
+  header[style*="position: fixed"],
+  header[style*="position:fixed"],
+  header[style*="position: fixed"],
+  header[style*="position:fixed"] {
+    position: sticky !important;
+    top: 0 !important;
+  }
+  
+  /* Classe pour forcer le sticky */
+  .force-sticky {
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 9999 !important;
+  }
+  
+  /* CSS avec spécificité maximale pour forcer le sticky */
+  html body div header.force-sticky,
+  html body div div header.force-sticky,
+  html body div div div header.force-sticky {
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 9999 !important;
+  }
+  
+  /* Override de tous les fixed avec spécificité maximale */
+  html body div header[style*="position: fixed"],
+  html body div header[style*="position:fixed"],
+  html body div div header[style*="position: fixed"],
+  html body div div header[style*="position:fixed"] {
+    position: sticky !important;
+    top: 0 !important;
+  }
+  
+  /* FORCER LE STICKY AVEC TOUS LES SÉLECTEURS POSSIBLES */
+  header,
+  header[class],
+  header[ref],
+  header[style],
+  header.force-sticky,
+  header[class*="header"],
+  header[class*="Header"],
+  *[role="banner"],
+  body > header,
+  body > div > header,
+  body > div > div > header,
+  body > div > div > div > header,
+  html body header,
+  html body div header,
+  html body div div header,
+  html body div div div header {
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 9999 !important;
+  }
+  
+  /* S'assurer que les overlays ne perturbent pas le header */
+  [data-slot="sheet-overlay"] {
+    z-index: 40 !important;
+  }
+  
+  [data-slot="sheet-content"] {
+    z-index: 45 !important;
+  }
+  
+  /* CSS FINAL POUR FORCER LE STICKY - S'EXÉCUTE EN DERNIER */
+  @media screen {
+    header {
+      position: sticky !important;
+      top: 0 !important;
+      z-index: 9999 !important;
+    }
+  }
+  
+  /* CSS avec !important sur tout */
+  * {
+    --header-position: sticky !important;
+  }
+  
+  header {
+    position: var(--header-position) !important;
+    top: 0 !important;
+    z-index: 9999 !important;
+  }
+  
+  /* FORCER LE STICKY AVEC UNE CLASSE SPÉCIFIQUE */
+  .header-sticky {
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 9999 !important;
+  }
+  
+  /* Override de tous les fixed avec une classe spécifique */
+  .header-sticky[style*="position: fixed"],
+  .header-sticky[style*="position:fixed"] {
+    position: sticky !important;
+    top: 0 !important;
+  }
+  
+  /* Forcer le header au-dessus de tous les sidebars */
+  [data-slot="sidebar-container"] {
+    z-index: 10 !important;
+  }
+  
+  /* S'assurer que le header reste sticky même avec des éléments fixed */
+  html {
+    position: relative !important;
+  }
+  
+  body {
+    position: relative !important;
+  }
+  
+  /* Supprimer complètement l'ombre du bouton burger */
+  button[class*="2xl:hidden"],
+  .button[class*="2xl:hidden"],
+  [data-slot="sheet-trigger"] button {
+    box-shadow: none !important;
+    filter: none !important;
+    text-shadow: none !important;
+    background: transparent !important;
+    border: none !important;
+    outline: none !important;
+  }
+  
+  button[class*="2xl:hidden"]:hover,
+  .button[class*="2xl:hidden"]:hover,
+  [data-slot="sheet-trigger"] button:hover {
+    box-shadow: none !important;
+    filter: none !important;
+  }
+  
+  button[class*="2xl:hidden"]:focus,
+  .button[class*="2xl:hidden"]:focus,
+  [data-slot="sheet-trigger"] button:focus {
+    box-shadow: none !important;
+    filter: none !important;
+  }
+  
+  button[class*="2xl:hidden"]:active,
+  .button[class*="2xl:hidden"]:active,
+  [data-slot="sheet-trigger"] button:active {
+    box-shadow: none !important;
+    filter: none !important;
+  }
+  
+  /* Empêcher le scroll horizontal définitivement */
+  html, body {
+    overflow-x: hidden !important;
+    max-width: 100vw !important;
+  }
+  
+  /* Fix pour tous les conteneurs */
+  .container, .max-w-7xl, .max-w-4xl, .max-w-3xl, .max-w-2xl {
+    max-width: 100vw !important;
+    overflow-x: hidden !important;
   }
 }

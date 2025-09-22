@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils"
 import { Menu, Facebook, Linkedin, XIcon } from "lucide-react"
 import { useLogo, useEntete, useReseauxSociaux } from "@/hooks/useDirectus"
 import Image from "next/image"
-import { useState } from "react"
+import { useState, useEffect, useRef } from "react"
 
 // Fonction pour convertir hex en RGB
 function hexToRgb(hex: string): string {
@@ -70,24 +70,101 @@ export function Header() {
   const { entete, loading: enteteLoading } = useEntete()
   const { reseauxSociaux, loading: reseauxLoading } = useReseauxSociaux()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const headerRef = useRef<HTMLElement>(null)
+
+  // Forcer le sticky avec useEffect - APPROCHE ULTIME
+  useEffect(() => {
+    const forceSticky = () => {
+      if (headerRef.current) {
+        // Forcer le sticky avec setProperty
+        headerRef.current.style.setProperty('position', 'sticky', 'important')
+        headerRef.current.style.setProperty('top', '0', 'important')
+        headerRef.current.style.setProperty('z-index', '9999', 'important')
+        headerRef.current.style.setProperty('width', '100%', 'important')
+        headerRef.current.style.setProperty('max-width', '100vw', 'important')
+        
+        // Ajouter une classe CSS pour forcer le sticky
+        headerRef.current.classList.add('force-sticky')
+        headerRef.current.classList.add('header-sticky')
+        
+        // Forcer aussi sur le parent pour s'assurer qu'il n'y a pas de contexte de stacking
+        const parent = headerRef.current.parentElement
+        if (parent) {
+          parent.style.setProperty('position', 'relative', 'important')
+        }
+        
+        // Forcer sur le body
+        document.body.style.setProperty('position', 'relative', 'important')
+        
+        // Forcer sur tous les parents
+        let current = headerRef.current.parentElement
+        while (current && current !== document.body) {
+          current.style.setProperty('position', 'relative', 'important')
+          current = current.parentElement
+        }
+        
+        // Forcer aussi avec une approche différente
+        headerRef.current.setAttribute('style', 
+          headerRef.current.getAttribute('style') + 
+          '; position: sticky !important; top: 0 !important; z-index: 9999 !important;'
+        )
+      }
+    }
+    
+    forceSticky()
+    
+    // Reforcer après un délai pour contrer les CSS dynamiques
+    setTimeout(forceSticky, 100)
+    setTimeout(forceSticky, 500)
+    setTimeout(forceSticky, 1000)
+    setTimeout(forceSticky, 2000)
+    
+    // Observer les changements de style pour reforcer
+    const observer = new MutationObserver(() => {
+      setTimeout(forceSticky, 50)
+    })
+    
+    if (headerRef.current) {
+      observer.observe(headerRef.current, { 
+        attributes: true, 
+        attributeFilter: ['style', 'class'] 
+      })
+    }
+    
+    // Observer aussi le body
+    const bodyObserver = new MutationObserver(() => {
+      setTimeout(forceSticky, 50)
+    })
+    
+    bodyObserver.observe(document.body, { 
+      attributes: true, 
+      attributeFilter: ['style', 'class'] 
+    })
+    
+    return () => {
+      observer.disconnect()
+      bodyObserver.disconnect()
+    }
+  }, [])
   
   const navigation = [
-    { name: entete?.titre_page_0 || "Accueil", href: "/" },
-    { name: entete?.titre_page_1 || "Qui sommes nous ?", href: "/qui-sommes-nous" },
-    { name: entete?.titre_page_2 || "Bureau / CA", href: "/bureau-ca" },
-    { name: entete?.titre_page_3 || "Nos projets / missions", href: "/projets-missions" },
-    { name: entete?.titre_page_4 || "Nos actualités", href: "/actualites" },
-    { name: entete?.titre_page_5 || "Agenda", href: "/evenements" },
+    { name: entete?.titre_page_1 || "Accueil", href: "/" },
+    { name: entete?.titre_page_2 || "Qui sommes nous ?", href: "/qui-sommes-nous" },
+    { name: entete?.titre_page_3 || "Bureau / CA", href: "/bureau-ca" },
+    { name: entete?.titre_page_4 || "Nos projets / missions", href: "/projets-missions" },
+    { name: entete?.titre_page_5 || "Nos actualités", href: "/actualites" },
+    { name: entete?.titre_page_6 || "Agenda", href: "/evenements" },
     { name: "Partenaires", href: "/partenaires" },
-    { name: entete?.titre_page_6 || "Je suis patient", href: "/patient" },
-    { name: entete?.titre_page_7 || "Je suis professionnel", href: "/professionnel" },
-    { name: entete?.titre_page_8 || "Comment adhérer ?", href: "/adherer" },
-    { name: entete?.titre_page_9 || "Contacts", href: "/contact" },
+    { name: entete?.titre_page_7 || "Je suis patient", href: "/patient" },
+    { name: entete?.titre_page_8 || "Je suis professionnel", href: "/professionnel" },
+    { name: entete?.titre_page_9 || "Comment adhérer ?", href: "/adherer" },
+    { name: "Contacts", href: "/contact" },
   ]
 
   return (
     <header 
-      className="sticky top-0 z-50 w-full border-b backdrop-blur supports-[backdrop-filter]:bg-background/60" 
+      ref={headerRef}
+      className="w-full border-b header-sticky"
       style={{ 
         backgroundColor: entete?.couleur_de_fond ? 
           `rgba(${hexToRgb(entete.couleur_de_fond)}, ${entete.opacite ? entete.opacite / 100 : 1})` : 
@@ -218,12 +295,16 @@ export function Header() {
               <Button 
                 variant="ghost" 
                 size="sm" 
-                className="2xl:hidden shadow-none hover:shadow-none focus:shadow-none active:shadow-none [&>*]:shadow-none"
+                className="2xl:hidden"
                 style={{ 
                   color: entete?.couleur_titres_pages || 'inherit',
-                  boxShadow: 'none !important',
+                  boxShadow: 'none',
                   filter: 'none',
-                  textShadow: 'none'
+                  textShadow: 'none',
+                  backgroundColor: 'transparent',
+                  border: 'none',
+                  outline: 'none',
+                  background: 'none'
                 }}
               >
                 <Menu className="h-5 w-5" />
@@ -243,7 +324,7 @@ export function Header() {
               <SheetTitle className="sr-only">Menu de navigation</SheetTitle>
               <div 
                 className="flex flex-col space-y-6 mt-6"
-                style={{ color: entete?.couleur_texte || 'inherit' }}
+                style={{ color: entete?.couleur_titre || 'inherit' }}
               >
                 {/* Logo et titre dans le menu */}
                 <div className="flex items-center space-x-4 pb-4 border-b ml-4">

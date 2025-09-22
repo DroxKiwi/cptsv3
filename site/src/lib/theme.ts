@@ -334,6 +334,93 @@ export function generateThemeCSS(reglages: ReglagesGeneraux | null): string {
     .ombrage-actif .flex {
       gap: calc(16px + var(--epaisseur-ombrage)) !important;
     }
+    
+    /* Fix simple pour le header sticky */
+    header {
+      position: sticky !important;
+      top: 0 !important;
+      z-index: 9999 !important;
+    }
+    
+    .force-sticky {
+      position: sticky !important;
+      top: 0 !important;
+      z-index: 9999 !important;
+    }
+    
+    /* CSS avec spécificité maximale pour forcer le sticky */
+    html body div header.force-sticky,
+    html body div div header.force-sticky,
+    html body div div div header.force-sticky {
+      position: sticky !important;
+      top: 0 !important;
+      z-index: 9999 !important;
+    }
+    
+    /* Override de tous les fixed avec spécificité maximale */
+    html body div header[style*="position: fixed"],
+    html body div header[style*="position:fixed"],
+    html body div div header[style*="position: fixed"],
+    html body div div header[style*="position:fixed"] {
+      position: sticky !important;
+      top: 0 !important;
+    }
+    
+    /* FORCER LE STICKY AVEC TOUS LES SÉLECTEURS POSSIBLES */
+    header,
+    header[class],
+    header[ref],
+    header[style],
+    header.force-sticky,
+    header[class*="header"],
+    header[class*="Header"],
+    *[role="banner"],
+    body > header,
+    body > div > header,
+    body > div > div > header,
+    body > div > div > div > header,
+    html body header,
+    html body div header,
+    html body div div header,
+    html body div div div header {
+      position: sticky !important;
+      top: 0 !important;
+      z-index: 9999 !important;
+    }
+    
+    /* CSS FINAL POUR FORCER LE STICKY - S'EXÉCUTE EN DERNIER */
+    @media screen {
+      header {
+        position: sticky !important;
+        top: 0 !important;
+        z-index: 9999 !important;
+      }
+    }
+    
+    /* CSS avec !important sur tout */
+    * {
+      --header-position: sticky !important;
+    }
+    
+    header {
+      position: var(--header-position) !important;
+      top: 0 !important;
+      z-index: 9999 !important;
+    }
+    
+    /* FORCER LE STICKY AVEC UNE CLASSE SPÉCIFIQUE */
+    .header-sticky {
+      position: sticky !important;
+      top: 0 !important;
+      z-index: 9999 !important;
+    }
+    
+    /* Override de tous les fixed avec une classe spécifique */
+    .header-sticky[style*="position: fixed"],
+    .header-sticky[style*="position:fixed"] {
+      position: sticky !important;
+      top: 0 !important;
+    }
   `
 }
 

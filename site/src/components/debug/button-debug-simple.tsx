@@ -35,7 +35,7 @@ export function ButtonDebugSimple() {
             Exemple de bouton
           </Button>
           <div className="text-sm">
-            <div><strong>Fond:</strong> {boutonPrincipal.couleur_fond}</div>
+            <div><strong>Fond:</strong> {boutonPrincipal.couleur_de_fond}</div>
             <div><strong>Texte:</strong> {boutonPrincipal.couleur_texte}</div>
             <div><strong>Bordure:</strong> {boutonPrincipal.couleur_bordure || 'Aucune'}</div>
             <div><strong>Survol:</strong> {boutonPrincipal.survol_type}</div>

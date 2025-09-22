@@ -39,7 +39,7 @@ services:
       - DB_USER=admin
       - DB_PASSWORD=admin
       - ADMIN_EMAIL=corentinfredj.dev@gmail.com
-      - ADMIN_PASSWORD=$Ki26736846wI!
+      - ADMIN_PASSWORD=!Ki26736846wI!
       - CORS_ENABLED=true
       - CORS_ORIGIN=http://localhost:3000
     depends_on:
