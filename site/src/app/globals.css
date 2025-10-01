@@ -118,13 +118,14 @@
   }
   
   html {
-    overflow-x: hidden;
+    scroll-behavior: smooth;
   }
   
   body {
     @apply bg-background text-foreground;
     width: 100%;
     max-width: 100vw;
+    position: relative;
   }
   
   /* Empêcher le scroll horizontal sur tous les éléments */
@@ -410,7 +411,6 @@
   
   /* Empêcher le scroll horizontal définitivement */
   html, body {
-    overflow-x: hidden !important;
     max-width: 100vw !important;
   }
   
@@ -418,5 +418,109 @@
   .container, .max-w-7xl, .max-w-4xl, .max-w-3xl, .max-w-2xl {
     max-width: 100vw !important;
     overflow-x: hidden !important;
+  }
+}
+
+/* ===== HEADER STICKY ULTRA SIMPLE ===== */
+@layer base {
+  /* Header sticky ultra simple - priorité maximale */
+  header {
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 9999 !important;
+    width: 100% !important;
+    max-width: 100vw !important;
+    left: 0 !important;
+    right: 0 !important;
+  }
+  
+  /* S'assurer que le body et html permettent le sticky */
+  html, body {
+    position: relative !important;
+  }
+  
+  /* Le main ne doit pas interférer */
+  main {
+    position: relative !important;
+    z-index: 1 !important;
+  }
+  
+  /* Supprimer l'ombre du bouton burger mobile/tablette */
+  .burger-button-no-shadow {
+    box-shadow: none !important;
+    filter: none !important;
+    text-shadow: none !important;
+  }
+  
+  .burger-button-no-shadow:hover {
+    box-shadow: none !important;
+    filter: none !important;
+  }
+  
+  .burger-button-no-shadow:focus {
+    box-shadow: none !important;
+    filter: none !important;
+  }
+  
+  .burger-button-no-shadow:active {
+    box-shadow: none !important;
+    filter: none !important;
+  }
+  
+  /* Forcer la taille des icônes réseaux sociaux */
+  .social-icon-large {
+    width: 32px !important;
+    height: 32px !important;
+    min-width: 32px !important;
+    min-height: 32px !important;
+  }
+
+  /* Forcer la taille des icônes réseaux sociaux dynamiques */
+  .social-icon-dynamic {
+    width: var(--icon-size) !important;
+    height: var(--icon-size) !important;
+    min-width: var(--icon-size) !important;
+    min-height: var(--icon-size) !important;
+  }
+
+  /* Forcer la taille des icônes réseaux sociaux - approche plus agressive */
+  .social-icon-dynamic img,
+  .social-icon-dynamic [data-nimg="fill"] {
+    width: var(--icon-size) !important;
+    height: var(--icon-size) !important;
+    min-width: var(--icon-size) !important;
+    min-height: var(--icon-size) !important;
+    max-width: var(--icon-size) !important;
+    max-height: var(--icon-size) !important;
+  }
+
+  /* Override spécifique pour les classes Tailwind */
+  .social-icon-dynamic.h-4,
+  .social-icon-dynamic.w-4 {
+    width: var(--icon-size) !important;
+    height: var(--icon-size) !important;
+  }
+
+  /* Forcer la taille des images réseaux sociaux */
+  .social-icon img {
+    width: var(--icon-size, 20px) !important;
+    height: var(--icon-size, 20px) !important;
+    min-width: var(--icon-size, 20px) !important;
+    min-height: var(--icon-size, 20px) !important;
+    max-width: var(--icon-size, 20px) !important;
+    max-height: var(--icon-size, 20px) !important;
+  }
+  
+  /* Menu qui démarre en dessous du header */
+  [data-slot="sheet-content"] {
+    top: 4rem !important; /* Commencer en dessous du header (h-16 = 4rem) */
+    height: calc(100vh - 4rem) !important; /* Hauteur totale moins la hauteur du header */
+    border: none !important;
+    box-shadow: none !important;
+  }
+  
+  /* Supprimer les bordures du menu */
+  [data-slot="sheet-content"] > div {
+    border: none !important;
   }
 }

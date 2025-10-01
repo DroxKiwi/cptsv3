@@ -87,16 +87,6 @@ export default function Home() {
                 Découvrir nos services
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
-              <Button 
-                size="lg" 
-                className="w-full sm:w-auto text-base sm:text-lg py-3 sm:py-4 px-6 sm:px-8"
-                variant="outline"
-                style={getButtonStyles(boutons?.[0])}
-                {...getButtonHoverHandlers(boutons?.[0])}
-              >
-                Nous contacter
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
             </div>
           </div>
           

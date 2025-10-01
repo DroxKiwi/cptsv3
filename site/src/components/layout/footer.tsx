@@ -123,37 +123,50 @@ export function Footer() {
           
           <div className="flex items-center justify-center space-x-4">
             {reseauxSociaux && reseauxSociaux.length > 0 ? (
-              reseauxSociaux.map((reseau) => (
-                <Button key={reseau.id} variant="ghost" size="sm" asChild>
-                  <Link 
-                    href={reseau.redirection} 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="flex items-center space-x-2" 
-                    style={{ color: piedDePage?.couleur_texte || 'inherit' }}
-                  >
-                    {reseau.logo ? (
-                      <div className="relative h-4 w-4">
-                        <Image
+              reseauxSociaux.map((reseau) => {
+                const iconSize = reseau.taille ? `${reseau.taille}px` : '16px' // Default 16px pour footer
+                return (
+                  <Button key={reseau.id} variant="ghost" size="sm" asChild>
+                    <Link 
+                      href={reseau.redirection} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="flex items-center space-x-2" 
+                      style={{ color: piedDePage?.couleur_texte || 'inherit' }}
+                    >
+                      {reseau.logo ? (
+                        <img
                           src={reseau.logo}
                           alt={reseau.nom}
-                          fill
-                          className="object-contain"
+                          className="object-contain social-icon"
+                          style={{ 
+                            '--icon-size': iconSize,
+                            width: iconSize, 
+                            height: iconSize,
+                            minWidth: iconSize,
+                            minHeight: iconSize,
+                            maxWidth: iconSize,
+                            maxHeight: iconSize
+                          } as React.CSSProperties}
                           onError={() => console.log('Erreur de chargement du logo:', reseau.nom)}
                         />
-                      </div>
-                    ) : (
-                      <div 
-                        className="h-4 w-4 rounded" 
-                        style={{ backgroundColor: piedDePage?.couleur_texte || '#9CA3AF' }}
-                      ></div>
-                    )}
-                    {reseau.visible && (
-                      <span className="text-xs sm:text-sm">{reseau.nom}</span>
-                    )}
-                  </Link>
-                </Button>
-              ))
+                      ) : (
+                        <div 
+                          className="rounded" 
+                          style={{ 
+                            width: iconSize,
+                            height: iconSize,
+                            backgroundColor: piedDePage?.couleur_texte || '#9CA3AF' 
+                          }}
+                        ></div>
+                      )}
+                      {reseau.visible && (
+                        <span className="text-xs sm:text-sm">{reseau.nom}</span>
+                      )}
+                    </Link>
+                  </Button>
+                )
+              })
             ) : (
               // Fallback si pas de réseaux sociaux
               <>

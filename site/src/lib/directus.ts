@@ -91,6 +91,7 @@ export interface Entete {
   id: number
   titre: string
   sous_titre: string
+  titre_page_0: string
   titre_page_1: string
   titre_page_2: string
   titre_page_3: string
@@ -214,6 +215,7 @@ export interface ReseauSocial {
   visible: boolean
   redirection: string
   logo?: string
+  taille?: number
 }
 
 export interface ChiffresCles {
