@@ -1,0 +1,10 @@
+# Ignorer les sauvegardes (trop volumineuses pour Git)
+backups/
+*.sql
+*.tar.gz
+*.zip
+
+# Garder les scripts mais ignorer les données
+!README.md
+!*.ps1
+!*.sh

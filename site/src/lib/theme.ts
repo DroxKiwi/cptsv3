@@ -65,6 +65,7 @@ const defaultTheme = {
 //   'Consolas, monospace',
 //   'Monaco, monospace',
 //   'Cooper Black, serif',
+//   'Cooper BT, serif',
 //   'Menlo, monospace'
 // ]
 
