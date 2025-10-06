@@ -1,14 +1,38 @@
 import { createDirectus, rest } from '@directus/sdk'
 
 // Types pour les collections Directus
+export interface DirectusFile {
+  id: string
+  filename_disk: string
+  filename_download: string
+  title?: string
+  type: string
+  folder?: string
+  uploaded_by: string
+  uploaded_on: string
+  modified_by?: string
+  modified_on?: string
+  charset?: string
+  filesize: number
+  width?: number
+  height?: number
+  duration?: number
+  embed?: string
+  description?: string
+  location?: string
+  tags?: string[]
+  metadata?: Record<string, any>
+}
+
+// Types pour les collections Directus
 export interface Article {
   id: number
   titre: string
   resume?: string
   contenu: string
   excerpt?: string
-  featured_image?: string
-  image?: string
+  featured_image?: DirectusFile
+  image?: DirectusFile
   couleur_de_fond?: string
   couleur_texte?: string
   status: 'published' | 'draft' | 'archived'
@@ -54,6 +78,15 @@ export interface ReglagesGeneraux {
   couleur_ombrage?: string
   epaisseur_ombrage?: string
   ombrage?: boolean
+  // Animations
+  animation_entree?: string
+  animation_transition?: string
+  animation_delay?: string
+  animation_hover?: string
+  animation_stagger?: string
+  animation_page?: string
+  animations_activees?: boolean
+  animations_transitions_pages?: string
 }
 
 export interface Accueil {
@@ -285,7 +318,7 @@ export const directusClient = {
       // Articles
       async getArticles() {
         try {
-          const response = await fetch('/api/directus/items/articles?fields=*,etiquettes.*', {
+          const response = await fetch('/api/directus/items/articles?fields=*,etiquettes.etiquettes_id,featured_image.*,image.*', {
             method: 'GET',
             headers: {
               'Cache-Control': 'no-cache, no-store, must-revalidate',
@@ -299,7 +332,39 @@ export const directusClient = {
           }
           
           const data = await response.json()
-          return data.data || data
+          const articles = data.data || data
+          
+          // Récupérer les détails complets des étiquettes pour chaque article
+          const articlesWithTags = await Promise.all(articles.map(async (article: any) => {
+            if (article.etiquettes && article.etiquettes.length > 0) {
+              try {
+                // Extraire les IDs des étiquettes
+                const etiquettesIds = article.etiquettes.map((etiquette: { etiquettes_id: number } | number) => {
+                  return typeof etiquette === 'object' ? etiquette.etiquettes_id : etiquette
+                }).join(',')
+                
+                // Récupérer les détails complets des étiquettes
+                const tagsResponse = await fetch(`/api/directus/items/etiquettes?filter[id][_in]=${etiquettesIds}`, {
+                  method: 'GET',
+                  headers: {
+                    'Cache-Control': 'no-cache, no-store, must-revalidate',
+                    'Pragma': 'no-cache',
+                    'Expires': '0'
+                  }
+                })
+                
+                if (tagsResponse.ok) {
+                  const tagsData = await tagsResponse.json()
+                  article.etiquettes = tagsData.data || tagsData
+                }
+              } catch (error) {
+                console.error('Erreur lors de la récupération des étiquettes:', error)
+              }
+            }
+            return article
+          }))
+          
+          return articlesWithTags
         } catch (error) {
           throw error
         }
@@ -307,7 +372,7 @@ export const directusClient = {
 
   async getArticle(id: number) {
     try {
-      const response = await fetch(`/api/directus/items/articles/${id}?fields=*,etiquettes.*`, {
+      const response = await fetch(`/api/directus/items/articles/${id}?fields=*,etiquettes.etiquettes_id,featured_image.*,image.*`, {
         method: 'GET',
         headers: {
           'Cache-Control': 'no-cache, no-store, must-revalidate',
@@ -321,10 +386,39 @@ export const directusClient = {
       }
       
       const data = await response.json()
-      return data.data || data
+      const article = data.data || data
+      
+      // Récupérer les détails complets des étiquettes
+      if (article.etiquettes && article.etiquettes.length > 0) {
+        try {
+          // Extraire les IDs des étiquettes
+          const etiquettesIds = article.etiquettes.map((etiquette: { etiquettes_id: number } | number) => {
+            return typeof etiquette === 'object' ? etiquette.etiquettes_id : etiquette
+          }).join(',')
+          
+          // Récupérer les détails complets des étiquettes
+          const tagsResponse = await fetch(`/api/directus/items/etiquettes?filter[id][_in]=${etiquettesIds}`, {
+            method: 'GET',
+            headers: {
+              'Cache-Control': 'no-cache, no-store, must-revalidate',
+              'Pragma': 'no-cache',
+              'Expires': '0'
+            }
+          })
+          
+          if (tagsResponse.ok) {
+            const tagsData = await tagsResponse.json()
+            article.etiquettes = tagsData.data || tagsData
+          }
         } catch (error) {
-          throw error
+          console.error('Erreur lors de la récupération des étiquettes:', error)
         }
+      }
+      
+      return article
+    } catch (error) {
+      throw error
+    }
   },
 
   // Tags
@@ -689,7 +783,7 @@ export const directusClient = {
       // Articles à la une
       async getArticlesALaUne() {
         try {
-          const response = await fetch('/api/directus/items/articles?filter[accueil_id][_nnull]=true&fields=*,etiquettes.*', {
+          const response = await fetch('/api/directus/items/articles?filter[accueil_id][_nnull]=true&fields=*,etiquettes.etiquettes_id,featured_image.*,image.*', {
             method: 'GET',
             headers: {
               'Cache-Control': 'no-cache, no-store, must-revalidate',
@@ -703,7 +797,39 @@ export const directusClient = {
           }
           
           const data = await response.json()
-          return data.data || data
+          const articles = data.data || data
+          
+          // Récupérer les détails complets des étiquettes pour chaque article
+          const articlesWithTags = await Promise.all(articles.map(async (article: any) => {
+            if (article.etiquettes && article.etiquettes.length > 0) {
+              try {
+                // Extraire les IDs des étiquettes
+                const etiquettesIds = article.etiquettes.map((etiquette: { etiquettes_id: number } | number) => {
+                  return typeof etiquette === 'object' ? etiquette.etiquettes_id : etiquette
+                }).join(',')
+                
+                // Récupérer les détails complets des étiquettes
+                const tagsResponse = await fetch(`/api/directus/items/etiquettes?filter[id][_in]=${etiquettesIds}`, {
+                  method: 'GET',
+                  headers: {
+                    'Cache-Control': 'no-cache, no-store, must-revalidate',
+                    'Pragma': 'no-cache',
+                    'Expires': '0'
+                  }
+                })
+                
+                if (tagsResponse.ok) {
+                  const tagsData = await tagsResponse.json()
+                  article.etiquettes = tagsData.data || tagsData
+                }
+              } catch (error) {
+                console.error('Erreur lors de la récupération des étiquettes:', error)
+              }
+            }
+            return article
+          }))
+          
+          return articlesWithTags
         } catch (error) {
           throw error
         }
@@ -712,7 +838,7 @@ export const directusClient = {
       // Événements
       async getEvenements() {
         try {
-          const response = await fetch('/api/directus/items/evenements?fields=*,etiquettes.*&sort=date_debut', {
+          const response = await fetch('/api/directus/items/evenements?fields=*,etiquettes.etiquettes_id&sort=date_debut', {
             method: 'GET',
             headers: {
               'Cache-Control': 'no-cache, no-store, must-revalidate',
@@ -772,7 +898,7 @@ export const directusClient = {
       // Événement par ID
       async getEvenement(id: number) {
         try {
-          const response = await fetch(`/api/directus/items/evenements/${id}?fields=*,etiquettes.*`, {
+          const response = await fetch(`/api/directus/items/evenements/${id}?fields=*,etiquettes.etiquettes_id`, {
             method: 'GET',
             headers: {
               'Cache-Control': 'no-cache, no-store, must-revalidate',
