@@ -1,0 +1,13 @@
+
+.btn-editmode{
+    cursor: pointer;
+    background-color: white;
+    transition: 500ms;
+    padding: 10px;
+    border: 1px solid white;
+}
+
+.btn-editmode:hover{
+    transition: 500ms;
+    border: 1px solid black;
+}

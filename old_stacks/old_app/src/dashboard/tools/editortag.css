@@ -1,0 +1,42 @@
+.is-editable:hover{
+    cursor: pointer;
+    border: 2px solid blue;
+}
+
+.id-editable{
+    color: rgb(0, 0, 146);
+    font-weight: bold;
+}
+
+.picklist-selectable{
+    border: 1px solid blue;
+}
+
+.custom-orderlist .p-orderlist-list {
+    max-height: 100%; /* Définit la hauteur maximum pour le défilement */
+}
+
+.custom-orderlist .p-orderlist-item:hover {
+    border: 2px solid blue;
+}
+
+.custom-orderlist .p-highlight .p-orderlist-item:hover {
+    border: 2px solid blue;
+}
+
+.custom-orderlist .p-focus.p-orderlist-item:hover {
+    border: 2px solid blue;
+}
+
+.custom-orderlist .p-highlight .p-focus .p-orderlist-item:hover {
+    border: 2px solid blue;
+}
+
+.p-orderlist {
+    scroll-behavior: auto; /* Désactive les comportements de défilement lisse */
+    overflow-y: hidden; /* Empêche les scrolls non désirés */
+}
+
+.p-orderlist-item.p-focus {
+    outline: none; /* Supprime la mise en surbrillance qui peut déclencher le scroll */
+}

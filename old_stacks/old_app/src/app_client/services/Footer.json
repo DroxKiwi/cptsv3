@@ -1,0 +1,19 @@
+{
+    "data": [
+        {
+            "name": "Teddy Pierre-Duplessix",
+            "role": "Infirmier et membre du conseil d'administration",
+            "link": ["boxorgaca"]
+        },
+        {
+            "name": "Jean-Valentin Gretteau",
+            "role": "Kinesithérapeute et membre du conseil d'administration",
+            "link": ["boxorgab"]
+        },
+        {
+            "name": "Elodie Boucher",
+            "role": "Coordinatrice et membre du conseil d'administration",
+            "link": ["boxorgacab"]
+        }
+    ]
+}

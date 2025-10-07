@@ -1,0 +1,24 @@
+{
+    "users": {
+        "1": {
+            "id": "admin@jetransporte.com",
+            "password": "test",
+            "role": "admin",
+            "token": "123",
+            "poste": "Développeur web",
+            "service": "Service informatique",
+            "societe": "Syskale",
+            "site": "Ouest"
+        },
+        "2": {
+            "id": "user@jetransporte.com",
+            "password": "test",
+            "role": "user",
+            "token": "456",
+            "poste": "Agent de quai",
+            "service": "Service exploitation",
+            "societe": "Salesky",
+            "site": "Auvergne"
+        }
+    }
+}

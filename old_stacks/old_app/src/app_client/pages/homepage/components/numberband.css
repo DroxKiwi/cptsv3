@@ -1,0 +1,65 @@
+
+
+.numberbandborder{
+    border: 1px solid black;
+}
+
+.numberband{
+    margin-top: 100px;
+    margin-bottom: 100px;
+    flex-shrink: 0;
+    border-radius: 30px;
+    background: #94DFE5;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+.numbers{
+    color: #FFF;
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    font-family: "Comic Sans MS";
+    font-size: 70px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.numberstitle{
+    color: #9A015B;
+    font-family: "Comic Sans MS";
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+
+
+.numberbandmobile{
+    margin-top: 100px;
+    margin-bottom: 100px;
+    width: 90%;
+    height: 500px;
+    flex-shrink: 0;
+    border-radius: 30px;
+    background: #94DFE5;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+.numbersmobile{
+    color: #FFF;
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    font-family: "Comic Sans MS";
+    font-size: 70px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.numberstitlemobile{
+    color: #9A015B;
+    font-family: "Comic Sans MS";
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}

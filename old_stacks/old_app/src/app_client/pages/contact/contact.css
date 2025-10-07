@@ -1,0 +1,22 @@
+
+
+.maintext{
+    color: #000000;
+    text-align: center;
+    font-family: "Comic Sans MS";
+    font-size: 25px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.redirectioncontact{
+    transition: 500ms;
+    font-size: 25px;
+}
+
+.redirectioncontact:hover{
+    transition: 500ms;
+    font-size: 26px;
+    color: rgb(0, 89, 198);
+}

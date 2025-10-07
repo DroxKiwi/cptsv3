@@ -1,0 +1,75 @@
+
+.header{
+  background: #FFF;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+.iconMediaHeader{
+  z-index: 8999;
+  cursor: pointer;
+  width: 40px;
+  height: 35px;
+  margin-bottom: 4px;
+  flex-shrink: 0;
+  border-radius: 0px 0px 10px 10px;
+  background: #faebd7;
+  box-shadow: 5px -5px 5px  rgba(0,0,0,0.6);
+  -moz-box-shadow: 5px -5px 5px  rgba(0,0,0,0.6);
+  -webkit-box-shadow: 5px -5px 5px  rgba(0,0,0,0.6);
+  -o-box-shadow: 5px -5px 5px  rgba(0,0,0,0.6);
+  transition-duration: 500ms;
+}
+
+.iconMediaHeader:hover{
+  transition-duration: 500ms;
+  height: 80px;
+  background-color: white;
+  box-shadow: 5px -5px 5px  #faebd7;
+  -moz-box-shadow: 5px -5px 5px  #faebd7;
+  -webkit-box-shadow: 5px -5px 5px  #faebd7;
+  -o-box-shadow: 5px -5px 5px  #faebd7;
+  border-bottom: 1px solid #faebd7;
+  border-left: 1px solid #faebd7;
+  border-right: 1px solid #faebd7;
+}
+
+.headerButton{
+  padding-left: 2px;
+  padding-right: 2px;
+  transition: 500ms;
+  color: #000;
+  text-align: center;
+  font-family: "Comic Sans MS";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.headerButton:hover{
+  transition: 500ms;
+  background-color: #0A727B;
+  color: azure;
+}
+
+.activeh{
+  background-color: #0A727B;
+  color: azure;
+}
+
+.speeddialheaderbutton{
+  cursor: pointer;
+  transition: 500ms;
+  width: 300px;
+  height: 50px;
+  border-radius: 10px;
+  background: #C9DDC2;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+.speeddialheaderbutton:hover{
+  transition: 500ms;
+  border-radius: 10px;
+  background: #C9DDC2;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25) inset;
+}

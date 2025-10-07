@@ -1,0 +1,25 @@
+{
+    "mainText": "",
+    "accordion": [
+        {
+            "content": "Améliorer l'accès aux soins",
+            "code": "2",
+            "bgcolor": "#0A727B",
+            "color": "#FFFFFF",
+            "items": [
+                {
+                    "content": "Faciliter l'installation des professionnels de santé sur le territoire",
+                    "code": "0"
+                },
+                {
+                    "content": "Favoriser la visibilité des patients sans médecin traitant",
+                    "code": "0"
+                },
+                {
+                    "content": "Avoir un suivi des arrivées et départs de médecins sur le territoire",
+                    "code": "0"
+                }
+            ]
+        }
+    ]
+}

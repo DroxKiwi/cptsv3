@@ -1,0 +1,78 @@
+
+
+
+.container-footer {
+  width: 100dvw;
+  height: 100dvh;
+  background-color: transparent;
+  position: relative;
+  overflow: hidden;
+}
+
+.reseaux-footer-title{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #0a717b56;
+  margin-bottom: -60px;
+}
+
+.reseaux-footer-subtitle{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #0A727B;
+}
+
+.reseaux-footer-items{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.reseaux-footer-item{
+  cursor: pointer;
+  transition: 500ms;
+}
+
+.reseaux-footer-item:hover{
+  transition: 500ms;
+  cursor: pointer;
+  opacity: 0.5;
+}
+
+.distorted-oval-backup {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%; /* Étend sur toute la largeur */
+  height: 500px; 
+  background-color: #007bff; /* Couleur de la forme */
+  clip-path: path(
+    "M -100 300 C 0 30, 400 230, 600 60 S 1000 170, 1200 90 S 1600 180, 1920 200 L 1920 500 L 0 500 Z"
+  ); /* Courbes arrondies */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.distorted-oval {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%; /* Étend sur toute la largeur */
+  height: 500px; 
+  background: linear-gradient(#c2f387, #77aa38); /* Couleur de la forme */
+  clip-path: path(
+    "M -100 0 C 0 0, 0 0, 300 100 S 1000 0, 2000 0, L 1920 500 L 0 500 Z"
+  ); /* Courbes arrondies */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.distorted-oval p {
+  color: white;
+  text-align: center;
+  margin: 0;
+}

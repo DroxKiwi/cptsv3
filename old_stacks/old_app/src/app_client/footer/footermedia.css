@@ -1,0 +1,24 @@
+
+
+
+
+
+.declarationofficiel{
+    margin-top: 60px;
+    margin-left: 20px;
+}
+
+.targetfootermedia{
+    transition: 500ms;
+}
+
+.targetfootermedia:hover{
+    transition: 500ms;
+    color: azure;
+    font-size: 14px;
+}
+
+.footer-media-grid{
+    margin-top: 150px;
+    margin-bottom: -50px;
+}

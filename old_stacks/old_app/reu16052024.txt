@@ -1,0 +1,14 @@
+Intégration icone dans une vague en fond de chaque page ! 
+Icone fondu dans une bulles
+Arrondir la partie Accordion
+fadir les partie missions
+ajouter icone dans les parties missions
+Enlever comment adherer et ajouter un bouton de redirection en haut avec les icones facebook linkedin
+Ajouter système de calssification document en lien avec le type de missions 
+Carte Orange sans fond
+Organigrame 20 prs max prendre tout l'écran, se baser sur l'exemple figma 
+Les articles ajouter photos test
+Nous contacter ajouter FaceBook page CPTS
+Gestion offre d'emploi - pdf à visualiser
+RoolUp intégration via Canva
+Se mettre à canvas ! 

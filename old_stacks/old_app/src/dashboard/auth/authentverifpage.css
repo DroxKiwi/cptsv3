@@ -1,0 +1,15 @@
+
+
+.btn-login{
+    cursor: pointer;
+    color: white;
+    transition: 500ms;
+    padding: 10px;
+    border: 1px solid white;
+}
+
+.btn-login:hover{
+    transition: 500ms;
+    border: 1px solid rgb(41, 109, 255);
+    color: rgb(28, 119, 255);
+}

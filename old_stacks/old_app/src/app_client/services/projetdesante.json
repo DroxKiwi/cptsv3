@@ -1,0 +1,406 @@
+{
+    "mainText": "",
+    "accordion": [
+        {
+            "content": "Améliorer l'accès aux soins",
+            "code": "2",
+            "bgcolor": "#0A727B",
+            "color": "#FFFFFF",
+            "items": [
+                {
+                    "content": "Faciliter l'accès à un médecin traitant",
+                    "code": "1",
+                    "bgcolor": "#0A727B",
+                    "color": "#FFFFFF",
+                    "items": [
+                        {
+                            "content": "Faciliter l'installation des professionnels de santé sur le territoire",
+                            "code": "0"
+                        },
+                        {
+                            "content": "Favoriser la visibilité des patients sans médecin traitant",
+                            "code": "0"
+                        },
+                        {
+                            "content": "Avoir un suivi des arrivées et départs de médecins sur le territoire",
+                            "code": "0"
+                        }
+                    ]
+                },
+                {
+                    "content": "Optimisation du temps médical",
+                    "code": "1",
+                    "bgcolor": "#0A727B",
+                    "color": "#FFFFFF",
+                    "items": [
+                        {
+                            "content": "Promouvoir des dispositifs pouvant faciliter un gain de temps médical",
+                            "code": "0"
+                        },
+                        {
+                            "content": "Favoriser le déploiement de nouvelles modalités d'exercice et de collaboration",
+                            "code": "0"
+                        }
+                    ]
+                },
+                {
+                    "content": "Améliorer la gestion des Soins Non Programmés",
+                    "code": "1",
+                    "bgcolor": "#0A727B",
+                    "color": "#FFFFFF",
+                    "items": [
+                        {
+                            "content": "Favoriser la visibilité des solutions locales déjà en place dans la gestion des SNP",
+                            "code": "0"
+                        },
+                        {
+                            "content": "Organiser la gestion des SNP à l'échelle du territoire",
+                            "code": "0"
+                        },
+                        {
+                            "content": "Suivre la mise en place du SAS 49",
+                            "code": "0"
+                        },
+                        {
+                            "content": "Mettre en place des protocoles de coopération pluriprofessionnels",
+                            "code": "0"
+                        },
+                        {
+                            "content": "Sensibiliser les usagers et professionnels aux SNP",
+                            "code": "0"
+                        }
+                    ]
+                },
+                {
+                    "content": "Développer la télémédecine et l'accès aux seconds recours",
+                    "code": "1",
+                    "bgcolor": "#0A727B",
+                    "color": "#FFFFFF",
+                    "items": [
+                        {
+                            "content": "Expérimenter les téléconsultations assistées",
+                            "code": "0"
+                        },
+                        {
+                            "content": "Promouvoir la téléexpertise",
+                            "code": "0"
+                        },
+                        {
+                            "content": "Favoirser la présence de spécialistes sur le territoire",
+                            "code": "0"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "content": "Réponse aux crises sanitaires graves",
+            "code": "2",
+            "bgcolor": "#9A015B",
+            "color": "#FFFFFF",
+            "items": [
+                {
+                    "content": "Répondre aux enjeux de crises sanitaires graves",
+                    "code": "1",
+                    "bgcolor": "#9A015B",
+                    "color": "#FFFFFF",
+                    "items": [
+                        {
+                            "content": "Elaborer un plan de réponse",
+                            "code": "0"
+                        },
+                        {
+                            "content": "Former les professionnels",
+                            "code": "0"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "content": "Développer des actions de prévention et promotion de la santé",
+            "code": "2",
+            "bgcolor": "#F74924",
+            "color": "#FFFFFF",
+            "items": [
+                {
+                    "content": "Participer à la dynamique locale en matière de prévention et promotion de la santé",
+                    "code": "1",
+                    "bgcolor": "#F74924",
+                    "color": "#FFFFFF",
+                    "items": [
+                        {
+                            "content": "En fonction des besoins et opportunité du territoire",
+                            "code": "0"
+                        },
+                        {
+                            "content": "Elaborer un programme annuel en prévention et promotion de la santé",
+                            "code": "0"
+                        },
+                        {
+                            "content": "Participer à des actions de dépistage ou les mener",
+                            "code": "0"
+                        }
+                    ]
+                },
+                {
+                    "content": "Mener des actions de prévention de pathologies chroniques",
+                    "code": "1",
+                    "bgcolor": "#F74924",
+                    "color": "#FFFFFF",
+                    "items": [
+                        {
+                            "content": "Promouvoir la nutrition et l'activité physique",
+                            "code": "0"
+                        },
+                        {
+                            "content": "Connaitre les gestes de premiers secours",
+                            "code": "0"
+                        }
+                    ]
+                },
+                {
+                    "content": "Promouvoir et développer l'Education Thérapeutique du Patient (ETP)",
+                    "code": "1",
+                    "bgcolor": "#F74924",
+                    "color": "#FFFFFF",
+                    "items": [
+                        {
+                            "content": "Promovoir l'offre existante",
+                            "code": "0"
+                        },
+                        {
+                            "content": "Développer des programmes spécifiques",
+                            "code": "0"
+                        }
+                    ]
+                },
+                {
+                    "content": "Améliorer la qualité de vie au travail des soignants et prévenir l'épuisement professionnel",
+                    "code": "1",
+                    "bgcolor": "#F74924",
+                    "color": "#FFFFFF",
+                    "items": [
+                        {
+                            "content": "Sensibiliser au repérage du syndrome d'épuisement professionnel",
+                            "code": "0"
+                        },
+                        {
+                            "content": "Mettre en place des actions de prévention à destination des professionnels de santé",
+                            "code": "0"
+                        },
+                        {
+                            "content": "Promouvoir le travail en collaboration",
+                            "code": "0"
+                        }
+                    ]
+                }
+            ]
+        },
+
+        {
+            "content": "Organiser des parcours pluriprofessionnels autour du patient",
+            "code": "2",
+            "bgcolor": "#F89426",
+            "color": "#FFFFFF",
+            "items": [
+                {
+                    "content": "Inscrire la CPTS dans une dynamique partenariale et territoriale",
+                    "code": "1",
+                    "bgcolor": "#F89426",
+                    "color": "#FFFFFF",
+                    "items": [
+                        {
+                            "content": "Participer aux travaux du DAC 49",
+                            "code": "0"
+                        },
+                        {
+                            "content": "Promouvoir des protocoles de coopération pluriprofessionnels et organisationnels",
+                            "code": "0"
+                        },
+                        {
+                            "content": "Favoriser l'interconnaissance pour une meilleure orientation des patients",
+                            "code": "0"
+                        }
+                    ]
+                },
+                {
+                    "content": "Renforcer la coordination ville-établissements de santé",
+                    "code": "1",
+                    "bgcolor": "#F89426",
+                    "color": "#FFFFFF",
+                    "items": [
+                        {
+                            "content": "Renfrocer les liens ville-hôpital",
+                            "code": "0"
+                        },
+                        {
+                            "content": "Renforcer les liens avec l'HAD",
+                            "code": "0"
+                        }
+                    ]
+                },
+                {
+                    "content": "Favoriser le déploiement d'outils numériques afin d'améliorer la coordination entre les professionnels",
+                    "code": "1",
+                    "bgcolor": "#F89426",
+                    "color": "#FFFFFF",
+                    "items": [
+                        {
+                            "content": "Recenser les outils de communication utilsés",
+                            "code": "0"
+                        },
+                        {
+                            "content": "Informer les professionnels de santé à la messagerie sécurisée",
+                            "code": "0"
+                        },
+                        {
+                            "content": "Choisir et déployer un ou des outils numériques",
+                            "code": "0"
+                        }
+                    ]
+                },
+                {
+                    "content": "Fluidifier le parcours Personnes âgées",
+                    "code": "1",
+                    "bgcolor": "#F89426",
+                    "color": "#FFFFFF",
+                    "items": [
+                        {
+                            "content": "Identifier les acteurs du territoire",
+                            "code": "0"
+                        },
+                        {
+                            "content": "Prévenir la dépendance",
+                            "code": "0"
+                        },
+                        {
+                            "content": "Améliorer les liens avec les acteurs de la gérontologie",
+                            "code": "0"
+                        }
+                    ]
+                },
+                {
+                    "content": "Fluidifier le parcours en Santé mentale",
+                    "code": "1",
+                    "bgcolor": "#F89426",
+                    "color": "#FFFFFF",
+                    "items": [
+                        {
+                            "content": "Améliorer le lien ville-établissements de santé mentale",
+                            "code": "0"
+                        },
+                        {
+                            "content": "Participer à l'amélioration de l'accès aux soins en psychiatrie",
+                            "code": "0"
+                        },
+                        {
+                            "content": "Elaborer des parcours par thématique",
+                            "code": "0"
+                        }
+                    ]
+                },
+                {
+                    "content": "Fluidifier le parcours de patients atteints de pathologies chroniques",
+                    "code": "1",
+                    "bgcolor": "#F89426",
+                    "color": "#FFFFFF",
+                    "items": [
+                        {
+                            "content": "Parcours diabète",
+                            "code": "0"
+                        },
+                        {
+                            "content": "Parcours insuffisance cardiaque",
+                            "code": "0"
+                        },
+                        {
+                            "content": "Etude d'autres parcours",
+                            "code": "0"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "content": "Qualité et pertinence des soins",
+            "code": "2",
+            "bgcolor": "#005789",
+            "color": "#FFFFFF",
+            "items": [
+                {
+                    "content": "Favoriser le développement de la qualité et de la pertinence des soins",
+                    "code": "1",
+                    "bgcolor": "#005789",
+                    "color": "#FFFFFF",
+                    "items": [
+                        {
+                            "content": "Développer des temps d'échanges entre professionnels",
+                            "code": "0"
+                        },
+                        {
+                            "content": "Développer des réunions d'échanges de pratiques et retours d'expériences",
+                            "code": "0"
+                        },
+                        {
+                            "content": "Proposer des formations et informations communes",
+                            "code": "0"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "content": "Accompagnement des professionnels de santé",
+            "code": "2",
+            "bgcolor": "#005789",
+            "color": "#FFFFFF",
+            "items": [
+                {
+                    "content": "Favoriser l'attractivité du territoire",
+                    "code": "1",
+                    "bgcolor": "#005789",
+                    "color": "#FFFFFF",
+                    "items": [
+                        {
+                            "content": "Accueillir les stagiaires et internes",
+                            "code": "0"
+                        },
+                        {
+                            "content": "Promouvoir le territoire",
+                            "code": "0"
+                        },
+                        {
+                            "content": "Améliorer les conditions de travail des professionnels",
+                            "code": "0"
+                        },
+                        {
+                            "content": "Promouvoir des moments conviviaux",
+                            "code": "0"
+                        }
+                    ]
+                },
+                {
+                    "content": "Déployer un système de communication pour la CPTS",
+                    "code": "1",
+                    "bgcolor": "#005789",
+                    "color": "#FFFFFF",
+                    "items": [
+                        {
+                            "content": "Etablir un plan de communication",
+                            "code": "0"
+                        },
+                        {
+                            "content": "Développer le système de communication",
+                            "code": "0"
+                        },
+                        {
+                            "content": "Communiquer aux professionnels l'offre de soins existante",
+                            "code": "0"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

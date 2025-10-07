@@ -1,0 +1,491 @@
+body {
+    background-color: #313131;
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+      'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+      sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-family: var(--font-family);
+  }
+  
+  :root {
+    --text-color-secondary:rgba(255, 255, 255, 0.6);
+  }
+  
+  code {
+    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+      monospace;
+  }
+  
+  html {
+    font-size: 14px;
+  }
+  
+  .header {
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  }
+  
+  .card {
+    background-color: #3d3d3d;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0px 10px 15px -3px rgba(255, 18, 18, 0.1);
+  }
+  
+  ul, li {
+    background: #3d3d3d;
+  }
+  
+  .borderMain {
+    border: 1px solid #cccccc;
+  }
+
+  .textHomeMAJ{
+    background-color: #3d3d3d;
+  }
+  
+  /*
+  Gestion divider
+  */
+
+  .p-divider-content{
+    background-color: #3d3d3d;
+  }
+
+  /*
+  Gestion animation
+  */
+  @keyframes p-progress-spinner-color {
+    100%,
+    0% {
+        stroke: #d62d20;
+    }
+    40% {
+        stroke: #ffffff !important;
+    }
+    66% {
+        stroke: #008744;
+    }
+    80%,
+    90% {
+        stroke: #c39030;
+    }
+  }
+  
+  .animate-bounce{
+    animation: bounce 1s infinite;
+  
+    @keyframes bounce {
+      0%, 100% {
+        transform: translateY(-5%);
+        animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+      }
+      50% {
+        transform: translateY(0);
+        animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+      }
+    }
+  }
+  
+  /*
+  Element desactivé
+  */
+  .p-disabled, .p-component:disabled {
+    opacity: 1;
+    color: white;
+    background-color: #8d8d8d;
+  }
+  
+  /*
+  Gestion scrollbar
+  */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+  }
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    background: #001dbe;
+    border: 1px solid rgb(255, 255, 255);
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
+  }
+  ::-webkit-scrollbar-thumb:window-inactive {
+    background: #001dbe;
+    border: 1px solid rgb(255, 255, 255);
+  }
+  
+  
+  /*
+  Gestion menu
+  */
+  .p-submenu-list {
+    background-color: #3d3d3d;
+  }
+  
+  .p-menubar .p-submenu-list .p-menu-separator {
+    border-top: 1px solid #818181;
+    margin: 0.25rem 0;
+  }
+  
+  .p-menubar{
+    background-color: #3d3d3d;
+    color: #94a3b8;
+    border: 1px solid #818181;
+  }
+  
+  .p-menubar .p-menuitem{
+    background-color: #3d3d3d;
+    color: #94a3b8;
+  }
+  
+  .p-menubar .p-menubar-root-list {
+    background-color: #3d3d3d;
+    color: #94a3b8;
+  }
+  
+  .p-menubar .p-menuitem-link{
+    background-color: #3d3d3d;
+    border: 1px solid #cccccc;
+    color: #94a3b8;
+  }
+  
+  .p-menubar .p-menuitem-link:hover{
+    .p-menuitem-text{
+      color: #ffffff;
+    }
+    background-color: #555555;
+    color: #ffffff;
+  }
+  
+  .p-menuitem-text{
+    color: #94a3b8;
+  }
+  
+  .p-menu{
+    background-color: #3d3d3d;
+    color: #555555;
+    border: 1px solid #cccccc;
+  }
+  
+  .p-menu .p-menuitem{
+    background-color: #3d3d3d;
+    color: #555555;
+    border: 1px solid #cccccc;
+  }
+  
+  .p-menu .p-menubar-root-list {
+    background-color: #3d3d3d;
+    border: 1px solid #cccccc;
+    color: #555555;
+  }
+  
+  .p-menu .p-menuitem-link{
+    background-color: #3d3d3d;
+  }
+  
+  .p-menu .p-menuitem-link:hover{
+    .p-menuitem-text{
+      color: #ffffff;
+    }
+    background-color: #555555;
+  }
+  
+  .p-sidebar-content{
+    background-color: #3d3d3d;
+  }
+  
+  .p-sidebar-header{
+    background-color: #3d3d3d;
+  }
+  
+  .p-tabmenu .p-tabmenu-nav .p-tabmenuitem .p-menuitem-link .p-menuitem-text{
+    color: #94a3b8;
+  }
+  
+  .p-menu-list .p-submenu-header{
+    background-color: #3d3d3d;
+    color: #94a3b8;
+  }
+  
+  .p-tabview .p-tabview-nav {
+    background: transparent;
+    border: 1px solid #3d3d3d;
+    border-width: 0 0 2px 0;
+  }
+  
+  .p-tabview .p-tabview-nav li {
+    margin-right: 0;
+  }
+  
+  .p-tabview .p-tabview-nav li .p-tabview-nav-link {
+    border: solid #9a0000;
+    border-width: 0 0 2px 0;
+    border-color: transparent transparent #bababa transparent;
+    background: #3d3d3d;
+    color: #bababa;
+    padding: 1rem;
+    font-weight: 600;
+    border-top-right-radius: 3px;
+    border-top-left-radius: 3px;
+    transition: box-shadow 0.2s;
+    margin: 0 0 -2px 0;
+  }
+  
+  .p-tabview .p-tabview-nav li .p-tabview-nav-link:not(.p-disabled):focus-visible {
+    outline: 0 none;
+    outline-offset: 0;
+    box-shadow: 0px 10px 15px -3px rgba(255, 18, 18, 0.1);
+  }
+  
+  .p-tabview .p-tabview-nav li:not(.p-highlight):not(.p-disabled):hover .p-tabview-nav-link {
+    background: #3d3d3d;
+    border-color: #c69b9b;
+    color: #c69b9b;
+  }
+  
+  .p-tabview .p-tabview-nav li.p-highlight .p-tabview-nav-link {
+    background: #3d3d3d;
+    border-color: #9a0000;
+    color: #9a0000;
+  }
+  
+  .p-tabview .p-tabview-close {
+    margin-left: 0.5rem;
+  }
+  
+  .p-tabview .p-tabview-nav-btn.p-link {
+    background: #3d3d3d;
+    color: #9a0000;
+    width: 2.357rem;
+    box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
+    border-radius: 0;
+  }
+  
+  .p-tabview .p-tabview-nav-btn.p-link:focus-visible {
+    outline: 0 none;
+    outline-offset: 0;
+    box-shadow: 0px 10px 15px -3px rgba(255, 18, 18, 0.1);
+  }
+  
+  .p-tabview .p-tabview-panels {
+    background: #3d3d3d;
+    padding: 1rem;
+    border: 0 none;
+    color: rgba(255, 255, 255, 0.87);
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px;
+  }
+  
+  .p-tabmenu .p-tabmenu-nav {
+    background: transparent;
+    border: 1px solid #ffffff;
+    border-width: 0 0 2px 0;
+  }
+  
+  .p-tabmenu .p-tabmenu-nav .p-tabmenuitem {
+    margin-right: 0;
+  }
+  
+  .p-tabmenu .p-tabmenu-nav .p-tabmenuitem .p-menuitem-link {
+    border: solid #ffffff;
+    border-width: 0 0 2px 0;
+    border-color: transparent transparent #bababa transparent;
+    background: #3d3d3d;
+    color: #bababa;
+    padding: 1rem;
+    font-weight: 600;
+    border-top-right-radius: 3px;
+    border-top-left-radius: 3px;
+    transition: box-shadow 0.2s;
+    margin: 0 0 -2px 0;
+    height: calc(100% + 2px);
+  }
+  
+  .p-tabmenu .p-tabmenu-nav .p-tabmenuitem .p-menuitem-link .p-menuitem-icon {
+    margin-right: 0.5rem;
+  }
+  
+  .p-tabmenu .p-tabmenu-nav .p-tabmenuitem .p-menuitem-link:not(.p-disabled):focus-visible {
+    outline: 0 none;
+    outline-offset: 0;
+    box-shadow: 0px 10px 15px -3px rgba(255, 18, 18, 0.1);
+  }
+  
+  .p-tabmenu .p-tabmenu-nav .p-tabmenuitem:not(.p-highlight):not(.p-disabled):hover .p-menuitem-link {
+    background: #3d3d3d;
+    border-color: #c69b9b;
+    color: #c69b9b;
+  }
+  
+  .p-tabmenu .p-tabmenu-nav .p-tabmenuitem.p-highlight .p-menuitem-link {
+    background: #3d3d3d;
+    border-color: #9a0000;
+    color: #9a0000;
+  }
+  
+  /* 
+  Gestion dataTable
+  */
+  .p-datatable{
+    background: #3d3d3d;
+  }
+
+  .p-component{
+    
+  }
+
+  .p-datatable-frozen-tbody tr {
+    background-color: #d36f6f;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  }
+  
+  .p-frozen-column{
+    background-color: #e0e5f3;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  }
+  
+  .shadowDiv{
+    border: 1px solid #8F0000;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  }
+  
+  /*
+  Gestion breadcrumbs
+  */
+  .p-breadcrumb{
+    background-color: #3d3d3d;
+  }
+  
+  .p-breadcrumb .p-breadcrumb-list{
+    background-color: #3d3d3d;
+  }
+  
+  .p-breadcrumb .p-breadcrumb-home{
+    background-color: #3d3d3d;
+  }
+  
+  .p-breadcrumb .p-menuitem-separator{
+    background-color: #ebebeb;
+  }
+  
+  .p-breadcrumb .p-menuitem {
+    background-color: #ebebeb;
+  }
+  
+  /*
+  Gestion bouton radio
+  */
+  .p-radiobutton {
+    width: 20px;
+    height: 20px;
+  }
+  
+  .p-radiobutton .p-radiobutton-box {
+    border: 2px solid #bababa;
+    background: #ffffff;
+    width: 20px;
+    height: 20px;
+    color: rgba(255, 255, 255, 0.87);
+    border-radius: 50%;
+    transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
+  }
+  
+  .p-radiobutton .p-radiobutton-box:not(.p-disabled):not(.p-highlight):hover {
+    border-color: #9a0000;
+  }
+  
+  .p-radiobutton .p-radiobutton-box:not(.p-disabled).p-focus {
+    outline: 0 none;
+    outline-offset: 0;
+    box-shadow: 0 0 0 1px #9a0000;
+    border-color: #9a0000;
+  }
+  
+  .p-radiobutton .p-radiobutton-box .p-radiobutton-icon {
+    width: 12px;
+    height: 12px;
+    transition-duration: 0.2s;
+    background-color: #ffffff;
+  }
+  
+  .p-radiobutton .p-radiobutton-box.p-highlight {
+    border-color: #9a0000;
+    background: #9a0000;
+  }
+  
+  .p-radiobutton .p-radiobutton-box.p-highlight:not(.p-disabled):hover {
+    border-color: #9a0000;
+    background: #9a0000;
+    color: #212529;
+  }
+  
+  .p-radiobutton.p-invalid > .p-radiobutton-box {
+    border-color: #ef9a9a;
+  }
+  
+  .p-radiobutton:focus {
+    outline: 0 none;
+  }
+  
+  /*
+  Gestion input-switch
+  */
+  .p-inputswitch-slider:hover{
+    background-color: #d3d3d3;
+  }
+  
+  .p-inputswitch-slider{
+    background-color: #b8b8b8;
+  }
+  
+  .p-inputswitch-checked .p-inputswitch-slider{
+    background-color: #8F0000;
+  }
+  
+  .p-inputswitch-checked .p-inputswitch-slider:hover{
+    background-color: #cc0000;
+  }
+  
+  .switchLR .p-inputswitch-slider{
+    background-color: #f75050;
+  }
+  
+  .switchLR .p-inputswitch-slider:hover{
+    background-color: #b94d4d;
+  }
+  
+  /*
+  Gestion bouton
+  */
+  
+  /*
+  Gestion Iframes
+  */
+  .iframeInclude{
+    border: 0px solid black;
+    box-shadow: 0px 10px 15px -3px rgba(0,0,0,0.1);
+  }
+  
+  
+  /*
+  Gestion ombrages
+  */
+  .shadowOutxl{
+    box-shadow: 0px 10px 15px -3px rgba(255, 18, 18, 0.1);
+  }
+  
+  
+  @tailwind utilities;
+  
+  

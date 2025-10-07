@@ -1,0 +1,58 @@
+
+
+.coassoc{
+    width: 1300px;
+    height: 200px;
+    flex-shrink: 0;
+    border-radius: 30px;
+    border: 1px solid black;
+    background: #ffffff;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+.coassoclogo{
+    color: #FFF;
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    font-family: "Comic Sans MS";
+    font-size: 70px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.coassocmobile{
+    width: 90%;
+    height: 200px;
+    flex-shrink: 0;
+    border-radius: 30px;
+    background: #F5F49B;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+.coassoclogomobile{
+    color: #FFF;
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    font-family: "Comic Sans MS";
+    font-size: 70px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.imgcoassos{
+    height: 200px;
+}
+
+.title-coassoc{
+    color: #0A727B;
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    font-family: "Cooper Black";
+    font-size: 40px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.zindexsupphomepage{
+    z-index: 100;
+}

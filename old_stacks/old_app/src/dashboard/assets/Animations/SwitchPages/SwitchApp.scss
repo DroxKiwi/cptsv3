@@ -1,0 +1,27 @@
+.revealer{
+	top: 0%;
+	left: 0%;
+  width: 100vw;
+  height: 100vh;
+  transform: translate3d(-150%, -50%, 0px);
+  opacity: 1;
+  background:rgb(114, 0, 0);
+  position: fixed;
+  z-index: 1000;
+  pointer-events: none;
+  &.active{
+    animation: anim-effect 1s;
+  }
+}
+@keyframes anim-effect {
+	0% {
+		transform: translate3d(0, -100%, 0);
+	}
+	62.5% {
+		transform: translate3d(0%, 0%, 0);
+		animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+	}
+	100% {
+		transform: translate3d(0%, 100%, 0);
+	}
+}

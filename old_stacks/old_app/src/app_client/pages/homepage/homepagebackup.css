@@ -1,0 +1,19 @@
+
+
+.bg{
+    z-index: 0;
+    position: absolute;
+}
+
+.test1{
+    transition: 3000ms;
+}
+
+.test2{
+    transition: 3000ms;
+    width: 0px !important;
+}
+
+.marginmobile{
+    margin-top: 150px;
+}

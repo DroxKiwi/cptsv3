@@ -1,0 +1,109 @@
+
+
+.itemappdiv{
+    transition: 500ms;
+    cursor: pointer;
+    height: 50px;
+    flex-shrink: 0;
+    border-radius: 0px;
+    border: 1px solid black;
+  }
+  
+  .itemappdiv:hover{
+    transition: 500ms;
+    background: #ff4c4c;
+  }
+  
+  .itemapptext{
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    font-family: Inter;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: normal;
+  }
+  
+  .collapse-side-menu{
+    transition: 500ms;
+    width: 5%;
+  }
+  
+  .not-collapse-side-menu{
+    transition: 500ms;
+    width: 25%;
+  }
+  
+  .collapse-content-menu{
+    transition: 500ms;
+    width: 95%;
+  }
+  
+  .not-collapse-content-menu{
+    transition: 500ms;
+    width: 75%;
+  }
+  
+  @media screen and (min-width: 1468px){
+    .collapse-side-menu{
+        transition: 500ms;
+        width: 3%;
+    }
+    
+    .not-collapse-side-menu{
+        transition: 500ms;
+        width: 15%;
+    }
+    
+    .collapse-content-menu{
+        transition: 500ms;
+        width: 97%;
+    }
+    
+    .not-collapse-content-menu{
+        transition: 500ms;
+        width: 85%;
+    }
+  }
+  
+  #side-menu {
+    .p-menuitem-content{
+      background-color: #004753;
+      color: rgb(255, 255, 255);
+    }
+    .p-menuitem-content:hover{
+      background-color: #3a3a3a;
+      color: #dfe09f;
+    }
+    .p-panelmenu-content{
+      background-color: #004753;
+      border: 0px;
+    }
+    .p-submenu-list{
+      background-color: #004753;
+    }
+    .p-panelmenu-header-content:hover{
+      background-color: #3a3a3a;
+    }
+  }
+  
+  .sidemenubg{
+    background-color: #002329;
+  }
+  
+  .isFolderSideMenu{
+    color: #dfe09f;
+  }
+  
+  #side-menu.collapse-side-menu {
+    .img-menu{
+        visibility: hidden;
+    }
+  }
+
+.titlepage{
+  color: #0A727B;
+  font-family: "Cooper Black";
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}

@@ -1,0 +1,81 @@
+.SLK_input {
+  border-radius: 15px;
+  background: #909090;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25) inset;
+}
+
+.SLK_date {
+  border-radius: 15px;
+  background: #909090;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25) inset;
+  color: #E2E8F0;
+}
+
+.SLK_select {
+  border-radius: 15px;
+  background: #909090;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  color: #E2E8F0;
+}
+
+.SLK_radio_off {
+  width: 25px;
+  height: 25px;
+  flex-shrink: 0;
+  border-radius: 5px;
+  background: #909090;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+.SLK_radio_on {
+  width: 25px;
+  height: 25px;
+  flex-shrink: 0;
+  border-radius: 5px;
+  background: #75A174;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25) inset;
+}
+
+.SLK_label {
+  background: #909090;
+  padding-right: 25px;
+  padding-left: 25px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+.SLK_label_text {
+  color: #E2E8F0;
+}
+
+.SLK_button {
+  width: 166px;
+  height: 49px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  color: #E2E8F0;
+}
+
+.SLK_button.valide {
+  background: #75A174;
+}
+
+.SLK_button:hover {
+  box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.25);
+}
+
+.SLK_button.clicked {
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25) inset;
+}
+
+.SLK_button.cancel {
+  background-color: #8F0000;
+}
+
+.SLK_div {
+  background-color: #E2E8F0;
+  border: 1px solid #8F0000;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}/*# sourceMappingURL=components_lightmode.css.map */

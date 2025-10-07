@@ -1,0 +1,245 @@
+
+.imgorganigrame{
+  transition: 1000ms;
+  width: 100px;
+  height: 100px;
+  background-size: cover;
+}
+
+.imgorganigrame:hover{
+  transition: 1000ms;
+  width: 250px;
+  height: 250px;
+}
+
+.nameoutbox{
+  width: 200px;
+  padding-top: 20px;
+  padding-left: 20px;
+  transition: 200ms;
+  color: #00000000;
+  font-family: "Comic Sans MS";
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.nameoutboxlabel{
+  font-size: 23px;
+}
+
+.p-speeddial-item{
+  z-index: 0;
+}
+
+.p-speeddial-item:hover{
+  z-index: 1;
+}
+
+
+
+.boxorgab {
+  position: fixed;
+  cursor: pointer;
+  border-radius: 20px;
+  width: 60px;
+  height: 60px;
+  background: #ffffff;
+  box-shadow:  0 0 0 #cccccc,
+               0 0 0 #ffffff,
+                10px 10px 10px #FFEA2F inset,
+                -10px -10px 10px #FFEA2F inset;
+  transition: 1500ms;
+}
+.boxorgab:hover{
+  .nameoutbox{
+    color: black;
+  }
+  background: #ffffff;
+  width: 280px;
+  height: 440px;
+  box-shadow:  40px 40px 40px #757575,
+                0 0 0 #ffffff,
+                0 0 0 #cccccc inset,
+                2px 2px 2px #ffffff inset;
+  transition: 1500ms;
+}
+
+.boxorgaca {
+  cursor: pointer;
+  border-radius: 20px;
+  width: 60px;
+  height: 60px;
+  background: #f0f0f0;
+  box-shadow:  0 0 0 #cccccc,
+               0 0 0 #ffffff,
+                10px 10px 10px #FFB82F inset,
+                -10px -10px 10px #FFB82F inset;
+  transition-duration: 1500ms;
+}
+.boxorgaca:hover{
+  .nameoutbox{
+    color: black;
+  }
+  background: #f0f0f0;
+  width: 480px;
+  height: 240px;
+  background: #fafafa;
+  box-shadow:  40px 40px 40px #757575,
+                0 0 0 #ffffff,
+                0 0 0 #cccccc inset,
+                2px 2px 2px #ffffff inset;
+  transition-duration: 1500ms;
+}
+
+.boxorgacab {
+  cursor: pointer;
+  border-radius: 20px;
+  width: 60px;
+  height: 60px;
+  background: #f0f0f0;
+  box-shadow:  0 0 0 #cccccc,
+               0 0 0 #ffffff,
+                10px 10px 10px #FFB82F inset,
+                -10px -10px 10px #FFEA2F inset;
+  transition-duration: 1500ms;
+}
+.boxorgacab:hover{
+  .nameoutbox{
+    color: black;
+  }
+  background: #f0f0f0;
+  width: 480px;
+  height: 240px;
+  background: #fafafa;
+  box-shadow:  40px 40px 40px #757575,
+                0 0 0 #ffffff,
+                0 0 0 #cccccc inset,
+                2px 2px 2px #ffffff inset;
+  transition-duration: 1500ms;
+}
+
+.titleorg{
+  color: #0A727B;
+  font-family: "Cooper Black";
+  font-size: 30px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.maintext{
+  color: #000;
+  text-align: center;
+  font-family: "Comic Sans MS";
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+
+
+
+@media screen and (min-width: 768px) {
+  .boxorgab {
+    position: fixed;
+    cursor: pointer;
+    border-radius: 20px;
+    width: 60px;
+    height: 60px;
+    background: #ffffff;
+    box-shadow:  0 0 0 #cccccc,
+                 0 0 0 #ffffff,
+                  10px 10px 10px #FFEA2F inset,
+                  -10px -10px 10px #FFEA2F inset;
+    transition: 1500ms;
+  }
+  .boxorgab:hover{
+    .nameoutbox{
+      color: black;
+    }
+    background: #ffffff;
+    width: 480px;
+    height: 240px;
+    box-shadow:  40px 40px 40px #757575,
+                  0 0 0 #ffffff,
+                  0 0 0 #cccccc inset,
+                  2px 2px 2px #ffffff inset;
+    transition: 1500ms;
+  }
+  
+  .boxorgaca {
+    cursor: pointer;
+    border-radius: 20px;
+    width: 60px;
+    height: 60px;
+    background: #f0f0f0;
+    box-shadow:  0 0 0 #cccccc,
+                 0 0 0 #ffffff,
+                  10px 10px 10px #FFB82F inset,
+                  -10px -10px 10px #FFB82F inset;
+    transition-duration: 1500ms;
+  }
+  .boxorgaca:hover{
+    .nameoutbox{
+      color: black;
+    }
+    background: #f0f0f0;
+    width: 480px;
+    height: 240px;
+    background: #fafafa;
+    box-shadow:  40px 40px 40px #757575,
+                  0 0 0 #ffffff,
+                  0 0 0 #cccccc inset,
+                  2px 2px 2px #ffffff inset;
+    transition-duration: 1500ms;
+  }
+  
+  .boxorgacab {
+    cursor: pointer;
+    border-radius: 20px;
+    width: 60px;
+    height: 60px;
+    background: #f0f0f0;
+    box-shadow:  0 0 0 #cccccc,
+                 0 0 0 #ffffff,
+                  10px 10px 10px #FFB82F inset,
+                  -10px -10px 10px #FFEA2F inset;
+    transition-duration: 1500ms;
+  }
+  .boxorgacab:hover{
+    .nameoutbox{
+      color: black;
+    }
+    background: #f0f0f0;
+    width: 480px;
+    height: 240px;
+    background: #fafafa;
+    box-shadow:  40px 40px 40px #757575,
+                  0 0 0 #ffffff,
+                  0 0 0 #cccccc inset,
+                  2px 2px 2px #ffffff inset;
+    transition-duration: 1500ms;
+  }
+  
+  .titleorg{
+    color: #0A727B;
+    font-family: "Cooper Black";
+    font-size: 30px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+  }
+  
+  .maintext{
+    color: #000;
+    text-align: center;
+    font-family: "Comic Sans MS";
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+  }
+}
